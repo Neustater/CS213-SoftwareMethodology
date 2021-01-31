@@ -65,4 +65,19 @@ public class Book {
             return false;
         }
     }
+
+    // Method for returning the Date
+    public Date getDate(){
+        return datePublished;
+    }
+
+    // Method for returning the Name
+    public String getName(){
+        return name;
+    }
+
+    //Method for returning the Serial Number
+    public int getNumber(){
+        return Integer.parseInt(number);
+    }
 }
