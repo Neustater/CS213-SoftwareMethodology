@@ -1,3 +1,5 @@
+package Library;
+
 public class Library {
     private Book[] books; // array-based implementation of the bag data structure
     private int numBooks; // the number of books currently in the bag
@@ -51,7 +53,7 @@ public class Library {
             System.out.println(name + " added to the bag.");
         }
         else {
-            System.out.println("Invalid Date!");
+            System.out.println("Invalid Library.Date!");
         }
     }
 

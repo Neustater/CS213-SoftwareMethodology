@@ -1,8 +1,9 @@
-import java.util.Calendar;
+package Library;
 import java.util.StringTokenizer;
+import java.util.Calendar;
 
 /**
- Date class (Ill change the descriptions later)
+ Library.Date class (Ill change the descriptions later)
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 
@@ -11,7 +12,12 @@ public class Date {
     private int month;
     private int day;
 
-    public Date(String date) {  //taking mm/dd/yyyy and create a Date object
+    public static final int QUADRENNIAL = 4;
+    public static final int CENTENNIAL = 100;
+    public static final int QUATERCENTENNIAL = 400;
+    public static final int MINYEAR = 1900;
+
+    public Date(String date) {  //taking mm/dd/yyyy and create a Library.Date object
         String monthSt;
         String daySt;
         String yearSt;
@@ -50,14 +56,13 @@ public class Date {
         boolean isLeapYear;
         boolean isValidDate = false;
         Date cur = new Date();
-        int minYear = 1900;
         int curYear = cur.getYear();
         int curMonth = cur.getMonth();
         int curDay = cur.getDay();
         int firstDay = 1;
         int lastDay = 0;
 
-        if(year < minYear || year > curYear){
+        if(year < MINYEAR || year > curYear){
             return isValidDate;
         }
         else if(year == curYear){
@@ -69,9 +74,9 @@ public class Date {
                 }
         }
 
-        if(year % 4 == 0){
-            if(year % 100 == 0){
-                if(year % 400 == 0) {
+        if(year % QUADRENNIAL == 0){
+            if(year % CENTENNIAL == 0){
+                if(year % QUATERCENTENNIAL == 0) {
                     isLeapYear = true;
                 }
                 else{

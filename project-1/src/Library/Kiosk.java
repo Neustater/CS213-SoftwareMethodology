@@ -1,5 +1,7 @@
+package Library;
+
 /**
- Kiosk class (Ill change the descriptions later)
+ Library.Kiosk class (Ill change the descriptions later)
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 

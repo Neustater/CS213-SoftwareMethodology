@@ -1,5 +1,7 @@
+package Library;
+
 /**
- Book class (Ill change the descriptions later)
+ Library.Book class (Ill change the descriptions later)
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 
@@ -34,14 +36,14 @@ public class Book {
     @Override
     /* dateString --> turns datePublished into a string
      availability --> checks if the book is checkedOut of the library or not
-     Returns this Format: "Book#10007::Design Patterns::5/30/1996::is available." */
+     Returns this Format: "Library.Book#10007::Design Patterns::5/30/1996::is available." */
     public String toString() {
         String dateString = datePublished.toString();
         String availability = "is available.";
         if(this.checkedOut){
             availability = "is not available.";
         }
-        return "Book#" + number + "::" + name + "::" + dateString + "::" + availability;
+        return "Library.Book#" + number + "::" + name + "::" + dateString + "::" + availability;
     }
 
     // Method for checking out a book
@@ -64,7 +66,7 @@ public class Book {
         }
     }
 
-    // Method for returning the Date
+    // Method for returning the Library.Date
     public Date getDate(){
         return datePublished;
     }

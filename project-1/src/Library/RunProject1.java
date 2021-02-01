@@ -1,5 +1,7 @@
+package Library;
+
 /**
- Runs the Kiosk's run method.
+ Runs the Library.Kiosk's run method.
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 
