@@ -1,5 +1,3 @@
-package com.softwaremeth.project1;
-
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
@@ -115,9 +113,6 @@ public class Date {
 
 
     public String toString(){   //returns date in mm/dd/yyyy format
-        String monthSt = String.format("%02d", month);  //converts month to padded string
-        String daySt = String.format("%02d", day);      //converts day to padded string
-        String yearSt = String.valueOf(year);
         return (month + "/" + day + "/" + year);
     }
 }

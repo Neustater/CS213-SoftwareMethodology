@@ -1,5 +1,3 @@
-package com.softwaremeth.project1;
-
 /**
  Kiosk class (Ill change the descriptions later)
  @author Muhammad Faizan Saiyed, Michael Neustater

@@ -1,5 +1,3 @@
-package com.softwaremeth.project1;
-
 /**
  Book class (Ill change the descriptions later)
  @author Muhammad Faizan Saiyed, Michael Neustater

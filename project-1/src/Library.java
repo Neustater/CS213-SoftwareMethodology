@@ -1,5 +1,3 @@
-package com.softwaremeth.project1;
-
 public class Library {
     private Book[] books; // array-based implementation of the bag data structure
     private int numBooks; // the number of books currently in the bag
