@@ -21,7 +21,7 @@ public class Book {
     /* method returns true if the serial numbers for the 2 book objects are the same.
      if the object is a book, creates a book copy of the object and compares it with
      the book using the method. */
-    public boolean equals(Object obj){
+    public boolean equals(Object obj){ //@todo test equals
         if(obj instanceof Book){
             Book book = (Book) obj;
             boolean booksAreEqual = book.number.equals(this.number);

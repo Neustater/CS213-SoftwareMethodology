@@ -4,7 +4,9 @@
  */
 
 public class Kiosk {
-
+/*
+@TODO SCANNER Start and stop messages, testbed main, handle bad commands test equals
+ */
     public void run() {
 
         Date fakeDate = new Date("1/10/2010"); //valid fake date
@@ -42,18 +44,16 @@ public class Kiosk {
 
         lib.print();
 
-        System.out.println("Date Below");
         lib.printByDate();
 
-        System.out.println("Number Below");
         lib.printByNumber();
 
-        System.out.println("CheckOut Test");
+        System.out.println("\nCheckOut Test:");
         lib.checkOut(fakeBook);
         lib.checkOut(fakeBook);
         lib.print();
 
-        System.out.println("Return and Remove");
+        System.out.println("\nReturn and Remove Test:");
         lib.returns(fakeBook);
         lib.remove(fakeBookThree);
         lib.print();

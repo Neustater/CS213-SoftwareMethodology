@@ -88,17 +88,22 @@ public class Library {
     }
 
     public void print() { //print the list of books in the bag
+        System.out.println("**List of books in the library.");
         for(int i = 0; i < numBooks; i++){
             System.out.println(books[i].toString());
         }
+
+        System.out.println("**End of list");
     }
 
     public void printByDate() { //@todo print the list of books by datePublished (ascending)
         Date tempDate; // ok
         Date minDate;   //sure get year day and month exist in the date class btw
-
         Book[] changing = new Book[books.length];
         Book tempBook = changing[0];
+
+        System.out.println("**List of books by the dates published.");
+
         for(int i=0; i < books.length; i++){
             changing[i] = books[i];
         }
@@ -138,7 +143,6 @@ public class Library {
                         }
                     }
                 }
-
             }
         }
 
@@ -147,6 +151,7 @@ public class Library {
             System.out.println(changing[i].toString());
         }
 
+        System.out.println("**End of list");
     }
 
     public void printByNumber() { //prints numbers in ascending order
@@ -155,10 +160,11 @@ public class Library {
         int lastNum = -1;
         int[] numbersArray = new int[numBooks];
 
+        System.out.println("**List of books by the book numbers.");
+
         for(int i = 0; i < numBooks; i++){      //makes array of all books numbers
             numbersArray[i] = books[i].getNumber();
         }
-
 
         for(int i = 0; i < numBooks; i++) {         //compares numbers of all books to the last smallest
             int curNumPos = 0;
@@ -173,5 +179,6 @@ public class Library {
             numbersArray[i] = -1;
             System.out.println(books[curNumPos].toString());
         }
+        System.out.println("**End of list");
     }
 }
