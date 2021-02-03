@@ -1,27 +1,41 @@
 package Library;
 
+/**
+ The Library class creates a library object used for storing books.
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
 public class Library {
     private Book[] books; // array-based implementation of the bag data structure
     private int numBooks; // the number of books currently in the bag
 
+    /**
+     *Creates library object with no books and bag size of 4
+     */
     public Library() { //default constructor to create an empty bag (Size 4)
         numBooks = 0;
         books = new Book[4];
     }
 
-    private int find(Book book) { // helper method to find a book in the bag
+    /**
+     *Finds the index of a book in the bag
+     *@param book to be located
+     *@return value of index, -1 indicates book is not found
+     */
+    private int find(Book book) {
         int curr_bagSize = books.length;
         int notFound = -1;
 
-        for(int i = 0; i < curr_bagSize; i++){
-            if(book == books[i]) {
-                return i;
+        for(int index = 0; index < curr_bagSize; index++){
+            if(book == books[index]) {
+                return index;
             }
         }
         return notFound;
     }
-
-    private void grow() { // helper method to grow the capacity by 4
+    /**
+     *helper method to increase the capacity of library by 4
+     */
+    private void grow() {
         int curr_bagSize = books.length;
         int new_bagSize = curr_bagSize + 4;
 
@@ -33,30 +47,25 @@ public class Library {
 
         books = newBag;
     }
-
+    /**
+     *Method to add a new Book object to the library
+     * @param book to be added
+     */
     public void add(Book book) {
         int curr_bagSize = books.length;
-        int i = 0;
-        Date date = book.getDate();
-        String name = book.getName();
 
-        if(date.isValid() == true) {
-            while (i < curr_bagSize && books[i] != null) {
-                i++;
-            }
-            if (i > curr_bagSize) {
-                grow();
-                i++;
-            }
-            books[i] = book;
-            numBooks++;
-            System.out.println(name + " added to the bag.");
+        if(curr_bagSize <= numBooks){
+            grow();
         }
-        else {
-            System.out.println("Invalid Library.Date!");
-        }
+
+        books[numBooks] = book;
+        numBooks++;
     }
-
+    /**
+     *Method to remove a Book obejct from the library
+     * @param book to be removed
+     * @return true if book exists and has been removed, false otherwise
+     */
     public boolean remove(Book book) {
         int curr_bagSize = books.length;
         boolean bookExists;
@@ -69,6 +78,7 @@ public class Library {
             while(bookIndex < curr_bagSize && books[bookIndex] != null){
                 if(bookIndex != (curr_bagSize - 1)) {
                     books[bookIndex] = books[bookIndex + 1];
+                    bookIndex++;
                 }
                 else{
                     books[bookIndex] = null;
@@ -81,106 +91,127 @@ public class Library {
         return bookExists;
     }
 
+    /**
+     * Method to see if the book that is being checked out is available
+     * for check out and exists in the library.
+     * @param book, takes in a book that needs to be checked out of the library.
+     * @return true if the book is available for check out, false otherwise.
+     */
     public boolean checkOut(Book book) {
         return book.checkingOut();
     }
 
+    /**
+     * Method to see if the book that is being returned was checked
+     * out before and exists in the library.
+     * @param book, takes in a book that needs to be returned to the Library.
+     * @return true if the book is checked Out for returning, false otherwise.
+     */
     public boolean returns(Book book) {
         return book.returning();
     }
 
+    /**
+     * Method to print out all the books in the library.
+     */
     public void print() { //print the list of books in the bag
-        System.out.println("**List of books in the library.");
         for(int i = 0; i < numBooks; i++){
             System.out.println(books[i].toString());
         }
 
-        System.out.println("**End of list");
     }
 
-    public void printByDate() { //@todo print the list of books by datePublished (ascending)
-        Date tempDate; // ok
-        Date minDate;   //sure get year day and month exist in the date class btw
-        Book[] changing = new Book[books.length];
-        Book tempBook = changing[0];
+    /**
+     * Method to call the date sorting method and printing out the
+     * list of books, sorted by date.
+     */
+    public void printByDate() {
+        sortDate();
+        print();
+    }
 
-        System.out.println("**List of books by the dates published.");
+    /**
+     * Method to call the number sorting method and printing out the
+     * list of books, sorted by numbers.
+     */
+    public void printByNumber() { //prints numbers in ascending order
+        sortNumber();
+        print();
+    }
 
-        for(int i=0; i < books.length; i++){
-            changing[i] = books[i];
-        }
+    /**
+     * Method to sort the library based on the date of the books in the
+     * library.
+     */
+    private void sortDate(){
+        Book tempBook;
+        Date innerDate;
+        int minIndex = 0;
 
-        minDate = changing[0].getDate();
-        int inside = 0;
-        int outside = 0;
-        for(outside = 0; outside < books.length; outside++) {
-            for (inside = 0; inside < books.length; inside++) {
-                if (changing[inside] == null) {
-                    if(inside + 1 == books.length) {
-                        break;
-                    }
-                    continue;
-                }
-                tempDate = changing[inside].getDate();
-                if (minDate.getYear() > tempDate.getYear()) { //Compare years
-                    minDate = changing[inside].getDate();
-                    tempBook = changing[inside];
-                    changing[inside] = changing[outside];
-                    changing[outside] = tempBook;
-                    break;
-                } else if (minDate.getYear() == tempDate.getYear()) { //if Equal Years compare month
-                    if (minDate.getMonth() > tempDate.getMonth()) { // Compare months
-                        minDate = changing[inside].getDate();
-                        tempBook = changing[inside];
-                        changing[inside] = changing[outside];
-                        changing[outside] = tempBook;
-                        break;
-                    } else if (minDate.getMonth() == tempDate.getMonth()) { //if Equal Months compare day
-                        if (minDate.getDay() > tempDate.getDay()) { //Compare day
-                            minDate = changing[inside].getDate();
-                            tempBook = changing[inside];
-                            changing[inside] = changing[outside];
-                            changing[outside] = tempBook;
-                            break;
+        for(int outer = 0; outer < books.length; outer++){
+            minIndex = outer;
+            for(int inner = outer + 1; inner < books.length; inner++){
+              innerDate = books[inner].getDate();
+                if(books[minIndex].getDate().getYear() > innerDate.getYear()){
+                    minIndex = inner;
+                } else if (books[minIndex].getDate().getYear() == innerDate.getYear()){
+                    if(books[minIndex].getDate().getMonth() > innerDate.getMonth()) {
+                        minIndex = inner;
+                    } else if (books[minIndex].getDate().getMonth() == innerDate.getMonth()){
+                        if(books[minIndex].getDate().getDay() > innerDate.getDay()){
+                            minIndex = inner;
                         }
                     }
                 }
             }
+            tempBook = books[minIndex];
+            books[minIndex] = books[outer];
+            books[outer] = tempBook;
         }
-
-        for(int i = 0; i < books.length; i++){
-            if(changing[i] == null) continue;
-            System.out.println(changing[i].toString());
-        }
-
-        System.out.println("**End of list");
     }
 
-    public void printByNumber() { //prints numbers in ascending order
-        int curNum = Integer.MAX_VALUE;
+    /**
+     * Method to sort the library based on the serial number of the
+     * books in the library.
+     */
+    private void sortNumber(){
+        int curNum;
+        int curNumIndex;
         int tempNum;
-        int lastNum = -1;
-        int[] numbersArray = new int[numBooks];
+        Book tempBook;
 
-        System.out.println("**List of books by the book numbers.");
-
-        for(int i = 0; i < numBooks; i++){      //makes array of all books numbers
-            numbersArray[i] = books[i].getNumber();
-        }
-
-        for(int i = 0; i < numBooks; i++) {         //compares numbers of all books to the last smallest
-            int curNumPos = 0;
-            for (int j = 0; j < numBooks; j++) {    //and finds the current smallest
-                tempNum = numbersArray[j];
-                if (tempNum > lastNum && tempNum < curNum && tempNum != -1) {
-                    curNum = numbersArray[j];
-                    curNumPos = j;
+        for(int i = 0; i < numBooks; i++) {
+            curNum = books[i].getNumber();
+            curNumIndex = i;
+            for (int j = i - 1; j >= 0; j--) {
+                tempNum = books[j].getNumber();
+                if (curNum < tempNum) {
+                    tempBook = books[curNumIndex];
+                    books[curNumIndex] = books[j];
+                    books[j] = tempBook;
+                    curNumIndex--;
+                }
+                else{
+                    continue;
                 }
             }
-            lastNum = numbersArray[curNumPos];              //prints and sets new smallest and sets it to out of bounds
-            numbersArray[i] = -1;
-            System.out.println(books[curNumPos].toString());
         }
-        System.out.println("**End of list");
     }
+
+    /**
+     * Helper method to find a specified book in the library with the
+     * use of a serial number.
+     * @param number, takes an int to be used to find a book in the library.
+     * @return the book that is found in the library, null if not found.
+     */
+    public Book findBook(int number){
+        for(int i = 0; i < numBooks; i++){
+            if(books[i].getNumber() == number){
+                return books[i];
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -3,9 +3,13 @@ import java.util.StringTokenizer;
 import java.util.Calendar;
 
 /**
- Library.Date class (Ill change the descriptions later)
+ The Date class is used to hold a date with the variables: year, month, and day.
+ This class provides an easier way to interact with the validity of dates of Books in the Library.
+ Also provides easier ways to return a date for use.
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
+
+//@TODO constant class
 
 public class Date {
     private int year;
@@ -17,41 +21,64 @@ public class Date {
     public static final int QUATERCENTENNIAL = 400;
     public static final int MINYEAR = 1900;
 
+    /**
+     * Used to create a Date Object with variables taken in by a string parameter in a specific format.
+     * @param date takes a String in a mm/dd/yyyy format.
+     */
     public Date(String date) {  //taking mm/dd/yyyy and create a Library.Date object
         String monthSt;
         String daySt;
         String yearSt;
 
-        StringTokenizer st = new StringTokenizer(date,"/");
+        StringTokenizer dateToken = new StringTokenizer(date,"/");
 
-        monthSt = st.nextToken();
-        daySt = st.nextToken();
-        yearSt = st.nextToken();
+        monthSt = dateToken.nextToken();
+        daySt = dateToken.nextToken();
+        yearSt = dateToken.nextToken();
 
         month = Integer.parseInt(monthSt);
         day = Integer.parseInt(daySt);
         year = Integer.parseInt(yearSt);
     }
-
+    /**
+     * Creates a Date object with today's date using the Calendar Class.
+     */
     public Date() {     //creat an object with today's date (See Calendar Class)
         Calendar currentDate = Calendar.getInstance();
-        this.year = currentDate.get(Calendar.YEAR);
-        this.month = currentDate.get(Calendar.MONTH) + 1;
-        this.day = currentDate.get(Calendar.DATE);
+        year = currentDate.get(Calendar.YEAR);
+        month = currentDate.get(Calendar.MONTH) + 1;
+        day = currentDate.get(Calendar.DATE);
     }
 
+    /**
+     * A helper method to get the year of the Book's datePublished
+     * @return an int of the year
+     */
     public int getYear(){
         return year;
     }
 
+    /**
+     * A helper method to get the month of the Book's datePublished
+     * @return an int of the month
+     */
     public int getMonth(){
         return month;
     }
 
+    /**
+     * A helper method to get the day of the Book's datePublished
+     * @return an int of the day
+     */
     public int getDay(){
         return day;
     }
 
+    /**
+     * Method to see if a date is a valid date to be used for the Library.
+     * A date with the year less than 1900 or a date beyond today’s date is invalid.
+     * @return a boolean presenting true if it is a valid date, false otherwise.
+     */
     public boolean isValid() {
         boolean isLeapYear;
         boolean isValidDate = false;
@@ -73,7 +100,22 @@ public class Date {
                     return isValidDate;
                 }
         }
+        lastDay = daysInMonth(year,month);
 
+        if(day >= firstDay && day <= lastDay)   //false if day or month is invalid, invalid months have day = 0
+            isValidDate = true;
+        return isValidDate;
+    }
+
+    /**
+     * A helper method to find out how many days are in a specified month, including leap years
+     * @param year needs to be checked if it is a leap year.
+     * @param month needs to see which month is being referred to, to return the correct days.
+     * @return an int of the amount of days in a specific month.
+     */
+    public int daysInMonth(int year, int month){
+        boolean isLeapYear;
+        int lastDay;
         if(year % QUADRENNIAL == 0){
             if(year % CENTENNIAL == 0){
                 if(year % QUATERCENTENNIAL == 0) {
@@ -91,32 +133,36 @@ public class Date {
             isLeapYear = false;
         }
 
-        if(month == 1 || month == 3 || month == 5 || month == 7 ||  //Checks if month is a 31 day month
-                month == 8 || month == 10 || month == 12)
+        if(month == Month.JANUARY || month == Month.MARCH ||
+                month == Month.MAY || month == Month.JULY ||  //Checks if month is a 31 day month
+                month == Month.AUGUST || month == Month.OCTOBER
+                || month == Month.DECEMBER)
         {
             lastDay = 31;
-        }
-
-        if(month == 4 || month == 5 || month == 9 || month == 11)   //Checks if month is a 30 day month and sets lastDay
+        }else if (month == Month.APRIL || month == Month.JUNE ||
+                    month == Month.SEPTEMBER || month == Month.NOVEMBER)   //Checks if month is a 30 day month and sets lastDay
         {
             lastDay = 30;
         }
-
-        if(month == 2)  //Checks if month is a 29 day month and sets lastDay
+        else if (month == Month.FEBRUARY)  //Checks if month is a 29 day month and sets lastDay
         {
-            if(isLeapYear){
+            if (isLeapYear) {
                 lastDay = 29;
-            }
-            else{
+            } else {
                 lastDay = 28;
             }
         }
-        if(day >= firstDay && day <= lastDay)   //false if day or month is invalid, invalid months have day = 0
-            isValidDate = true;
-        return isValidDate;
+        else{
+            lastDay = -1;
+        }
+
+        return lastDay;
     }
 
-
+    /**
+     * Method to represent the date in a String mm/dd/yyyy format.
+     * @return a string in the specified format.
+     */
     public String toString(){   //returns date in mm/dd/yyyy format
         return (month + "/" + day + "/" + year);
     }

@@ -1,7 +1,10 @@
 package Library;
 
 /**
- Library.Book class (Ill change the descriptions later)
+ The Book class is where four variables of a book is stored for being
+ used in the Library.
+ The private variables: number, name, checkedOut, and datePublished are
+ used for the virtual Library.
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 
@@ -20,9 +23,13 @@ public class Book {
     }
 
     @Override
-    /* method returns true if the serial numbers for the 2 book objects are the same.
-     if the object is a book, creates a book copy of the object and compares it with
-     the book using the method. */
+    /**
+     * Checks if the serial numbers for 2 book objects are the same. If
+     * the object is a book it creates a book copy of the object and
+     * compares it with the book using the method.
+     * @param object which is checked if it is a book or not.
+     * @return true if the books have the same serial number, false otherwise.
+     */
     public boolean equals(Object obj){ //@todo test equals
         if(obj instanceof Book){
             Book book = (Book) obj;
@@ -34,9 +41,11 @@ public class Book {
     }
 
     @Override
-    /* dateString --> turns datePublished into a string
-     availability --> checks if the book is checkedOut of the library or not
-     Returns this Format: "Library.Book#10007::Design Patterns::5/30/1996::is available." */
+    /**
+     * Provides a specified format to print the contents of a book:
+     * serial number, name, date, checked-out.
+     * @return a string in the format "Book#10007::Design Patterns::5/30/1996::is available."
+     */
     public String toString() {
         String dateString = datePublished.toString();
         String availability = "is available.";
@@ -46,7 +55,10 @@ public class Book {
         return "Library.Book#" + number + "::" + name + "::" + dateString + "::" + availability;
     }
 
-    // Method for checking out a book
+    /**
+     * A helper method to change the checkedOut boolean value to true
+     * @return true if the book is available for check out, false if it is already checked out.
+     */
     public boolean checkingOut(){
         if(this.checkedOut){
             return false;
@@ -56,7 +68,11 @@ public class Book {
         }
     }
 
-    // Method for returning a book
+    /**
+     * A helper method to change the checkOut boolean value to false
+     * @return true if the book was checked out and is now returned,
+     *         false if it was never checked out.
+     */
     public boolean returning(){
         if(this.checkedOut){
             this.checkedOut = false;
@@ -66,18 +82,35 @@ public class Book {
         }
     }
 
-    // Method for returning the Library.Date
+    /**
+     * A helper method to get the date of the book
+     * @return a Date object containing the datePublished of the book.
+     */
     public Date getDate(){
         return datePublished;
     }
 
-    // Method for returning the Name
+    /**
+     * A helper method to get the name of the book
+     * @return a String containing the name of the book.
+     */
     public String getName(){
         return name;
     }
 
-    //Method for returning the Serial Number
+    /**
+     * A helper method to get the serial number of the book
+     * @return an int of the serial number of book.
+     */
     public int getNumber(){
         return Integer.parseInt(number);
+    }
+
+    /**
+     * A helper method to see if a book is checked out or not.
+     * @return a boolean, true if it is checked out, false otherwise.
+     */
+    public boolean getChecked(){
+        return checkedOut;
     }
 }
