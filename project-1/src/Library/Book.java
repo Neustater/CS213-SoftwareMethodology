@@ -52,7 +52,7 @@ public class Book {
         if(this.checkedOut){
             availability = "is not available.";
         }
-        return "Library.Book#" + number + "::" + name + "::" + dateString + "::" + availability;
+        return "Book#" + number + "::" + name + "::" + dateString + "::" + availability;
     }
 
     /**

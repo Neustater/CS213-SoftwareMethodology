@@ -1,7 +1,7 @@
 package Library;
 
 /**
- *Driver class for library, initiates the Kiosk class which
+ *Driver class for library, initiates the Kiosk class.
  *@author Muhammad Faizan Saiyed, Michael Neustater
  */
 

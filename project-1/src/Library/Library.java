@@ -5,56 +5,56 @@ package Library;
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 public class Library {
-    private Book[] books; // array-based implementation of the bag data structure
-    private int numBooks; // the number of books currently in the bag
+    private Book[] books; // array-based implementation of the catalog data structure
+    private int numBooks; // the number of books currently in the catalog
 
     /**
-     *Creates library object with no books and bag size of 4
+     *Creates library object with no books and catalog size of 4
      */
-    public Library() { //default constructor to create an empty bag (Size 4)
+    public Library() { //default constructor to create an empty catalog (Size 4)
         numBooks = 0;
         books = new Book[4];
     }
 
     /**
-     *Finds the index of a book in the bag
+     *Finds the index of a book in the catalog
      *@param book to be located
      *@return value of index, -1 indicates book is not found
      */
     private int find(Book book) {
-        int curr_bagSize = books.length;
-        int notFound = -1;
+        int curr_catalogSize = books.length;
+            final int NOTFOUND = -1;          //value returned if book is not found
 
-        for(int index = 0; index < curr_bagSize; index++){
-            if(book == books[index]) {
+        for(int index = 0; index < curr_catalogSize; index++){
+            if(book.equals(books[index])) {
                 return index;
             }
         }
-        return notFound;
+        return NOTFOUND;
     }
     /**
      *helper method to increase the capacity of library by 4
      */
     private void grow() {
-        int curr_bagSize = books.length;
-        int new_bagSize = curr_bagSize + 4;
+        int curr_catalogSize = books.length;
+        int new_catalogSize = curr_catalogSize + 4;
 
-        Book[] newBag = new Book[new_bagSize];
+        Book[] newCatalog = new Book[new_catalogSize];      //array with new catalog capacity
 
-        for(int i = 0; i < curr_bagSize; i++){
-            newBag[i] = books[i];
+        for(int i = 0; i < curr_catalogSize; i++){      //fills new array
+            newCatalog[i] = books[i];
         }
 
-        books = newBag;
+        books = newCatalog;
     }
     /**
      *Method to add a new Book object to the library
      * @param book to be added
      */
     public void add(Book book) {
-        int curr_bagSize = books.length;
+        int curr_catalogSize = books.length;
 
-        if(curr_bagSize <= numBooks){
+        if(curr_catalogSize <= numBooks){       //determines if catalog size must increase before adding
             grow();
         }
 
@@ -67,7 +67,7 @@ public class Library {
      * @return true if book exists and has been removed, false otherwise
      */
     public boolean remove(Book book) {
-        int curr_bagSize = books.length;
+        int curr_catalogSize = books.length;
         boolean bookExists;
         int bookIndex;
 
@@ -75,8 +75,8 @@ public class Library {
         if(bookIndex >= 0){
             bookExists = true;
             numBooks--;
-            while(bookIndex < curr_bagSize && books[bookIndex] != null){
-                if(bookIndex != (curr_bagSize - 1)) {
+            while(bookIndex < curr_catalogSize && books[bookIndex] != null){     //shifts books to close gap
+                if(bookIndex != (curr_catalogSize - 1)) {
                     books[bookIndex] = books[bookIndex + 1];
                     bookIndex++;
                 }
@@ -114,11 +114,28 @@ public class Library {
     /**
      * Method to print out all the books in the library.
      */
-    public void print() { //print the list of books in the bag
+    public void print() { //print the list of books in the catalog
+
         for(int i = 0; i < numBooks; i++){
             System.out.println(books[i].toString());
         }
+    }
 
+    /**
+     * Method check if the library contains any books.
+     * @return True if empty, otherwise false
+     */
+    public boolean isEmpty(){
+        boolean libraryEmpty;
+
+        if(books == null || books[0] == null){
+            libraryEmpty = true;
+        }
+        else{
+            libraryEmpty = false;
+        }
+
+        return libraryEmpty;
     }
 
     /**
@@ -151,7 +168,10 @@ public class Library {
         for(int outer = 0; outer < books.length; outer++){
             minIndex = outer;
             for(int inner = outer + 1; inner < books.length; inner++){
-              innerDate = books[inner].getDate();
+                if(books[inner] == null){
+                    continue;
+                }
+                innerDate = books[inner].getDate();
                 if(books[minIndex].getDate().getYear() > innerDate.getYear()){
                     minIndex = inner;
                 } else if (books[minIndex].getDate().getYear() == innerDate.getYear()){
@@ -171,13 +191,13 @@ public class Library {
     }
 
     /**
-     * Method to sort the library based on the serial number of the
-     * books in the library.
+     * Insertion sort method to sort the library based on the
+     * serial number of the books in the library.
      */
     private void sortNumber(){
-        int curNum;
-        int curNumIndex;
-        int tempNum;
+        int curNum;         //number being sorted
+        int curNumIndex;    //index of number being sorted
+        int tempNum;        //value being compared to
         Book tempBook;
 
         for(int i = 0; i < numBooks; i++) {
@@ -210,7 +230,6 @@ public class Library {
                 return books[i];
             }
         }
-
         return null;
     }
 

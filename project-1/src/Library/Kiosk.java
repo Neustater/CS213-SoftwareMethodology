@@ -10,10 +10,11 @@ import java.util.StringTokenizer;
 
 public class Kiosk {
 
-    final int ADDNUMARGS = 3;   //number of args accepted when adding a book
-    final int MODNUMARGS = 2;   //number of args accepted when modifying a book
-    final int MINNUMBER = 10001;
-    final int MAXNUMBER = 99999;
+    final int ADDNUMARGS = 3;       //number of args accepted when adding a book
+    final int MODNUMARGS = 2;       //number of args accepted when modifying a book
+    final int SYSNUMARGS = 1;       //number of args accepted for system operation (ie: print or exit)
+    final int MINNUMBER = 10001;    //minimum valid serial number
+    final int MAXNUMBER = 99999;    //maximum valid serial number
 
     /**
      * Main method to run the Virtual Library, taking in inputs and expressing outputs.
@@ -22,23 +23,37 @@ public class Kiosk {
 
         Library library = new Library();
         boolean kioskRunning = true;
-        int nextNumber = MINNUMBER;
+        int nextNumber = MINNUMBER;         //serial number of the next created book
 
         System.out.println("Library Kiosk Running.");
         Scanner scan = new Scanner(System.in);
 
-        while(kioskRunning == true) {
-
+        while(kioskRunning) {
+            boolean noArg;      //true if input is "" other wise false
             String input = scan.nextLine();
+            int totalArguments;        //number of args entered by user
+            String operation;          //determines operation input by user
+            boolean validInput;
+
+            if(input.equals("")){
+                noArg = true;
+                input = " ";        //sets input to " " to pass though tokenizer
+            }
+            else{
+                noArg = false;
+            }
 
             StringTokenizer command = new StringTokenizer(input,",");
-            int totalArguments = command.countTokens();
-            String operation = command.nextToken();
-            boolean validInput;
+            totalArguments = command.countTokens();
+            operation = command.nextToken();
+
+            if(noArg){
+                operation = "";
+            }
 
             switch (operation) {
                 case "A":
-                    if(totalArguments !=ADDNUMARGS){
+                    if(totalArguments !=ADDNUMARGS){        //tests if number of args are valid
                         System.out.println("Invalid command!");
                         break;
                     }
@@ -47,10 +62,10 @@ public class Kiosk {
                     String dateStr = command.nextToken();
                     Date date = new Date(dateStr);
 
-                    if (date.isValid() == true) {
+                    if (date.isValid() == true) {       //function to check if date is valid
                         Book tempBook = new Book(number, name, date);
                         library.add(tempBook);
-                        System.out.println(name + " added to the bag.");
+                        System.out.println(name + " added to the Library.");
                         nextNumber++;
                     } else {
                         System.out.println("Invalid Date!");
@@ -118,24 +133,61 @@ public class Kiosk {
                     break;
 
                 case "PA":
-                    System.out.println("**List of books in the library.");
-                    library.print();
-                    System.out.println("**End of list");
+                    if(totalArguments != SYSNUMARGS){
+                        System.out.println("Invalid command!");
+                        break;
+                    }
+
+                    if(library.isEmpty()){
+                        System.out.println("Library catalog is empty!");
+                    }
+                    else{
+                        System.out.println("**List of books in the library.");
+                        library.print();
+                        System.out.println("**End of list");
+                    }
                     break;
                 case "PD":
-                    System.out.println("**List of books by the dates published.");
-                    library.printByDate();
-                    System.out.println("**End of list");
+                    if(totalArguments != SYSNUMARGS){
+                        System.out.println("Invalid command!");
+                        break;
+                    }
+
+                    if(library.isEmpty()){
+                        System.out.println("Library catalog is empty!");
+                    }
+                    else {
+                        System.out.println("**List of books by the dates published.");
+                        library.printByDate();
+                        System.out.println("**End of list");
+                    }
                     break;
                 case "PN":
-                    System.out.println("**List of books by the book numbers.");
-                    library.printByNumber();
-                    System.out.println("**End of list");
+                    if(totalArguments != SYSNUMARGS){
+                        System.out.println("Invalid command!");
+                        break;
+                    }
 
+                    if(library.isEmpty()){
+                        System.out.println("Library catalog is empty!");
+                    }
+                    else{
+                        System.out.println("**List of books by the book numbers.");
+                        library.printByNumber();
+                        System.out.println("**End of list");
+                    }
                     break;
                 case "Q":
+                    if(totalArguments != SYSNUMARGS){
+                        System.out.println("Invalid command!");
+                        break;
+                    }
+
                     kioskRunning = false;
 
+                    break;
+
+                case "":
                     break;
                 default:
                     System.out.println("Invalid command!");
@@ -143,74 +195,8 @@ public class Kiosk {
         }
 
         System.out.println("Kiosk session ended.");
-
-
-        Date fakeDate = new Date("12/10/2016"); //valid fake date
-        Date fakeDate2 = new Date("13/10/2016"); //invalid fake date
-        Date fakeDate3 = new Date("13/10/2016"); //invalid fake date
-        Date fakeDate4 = new Date("1/32/2016"); //invalid fake date (day too large)
-        Date fakeDate5 = new Date("2/29/2020"); //valid fake date (leap year) MORE LEAP YEARS CAN BE TESTED
-        Date fakeDate6 = new Date("2/29/2021"); //invalid fake date (not leap year)
-        Date fakeDate7 = new Date("1/10/1899"); //invalid fake date (too old)
-        Date fakeDate8 = new Date("1/10/2022"); //invalid fake date (future date)
-
-        Date fakeDate9 = new Date("2/13/2015"); //Valid
-
-        Date currentDate = new Date();
-        Library lib = new Library();
-        Book fakeBook = new Book("10020", "Potato", fakeDate9);
-        Book fakeBookTwo = new Book("10001", "Tomato", fakeDate2);
-        Book fakeBookThree = new Book("10002", "Gym", fakeDate);
-        Book fakeBookFour = new Book("10004", "Computers", fakeDate4);
-        lib.add(fakeBook);
-        lib.add(fakeBookTwo);
-        lib.add(fakeBookThree);
-        lib.add(fakeBookFour);
-        System.out.println(fakeBook.toString()); // prints the format for a book
-        System.out.println(fakeBook.equals(fakeBook)); // should be true
-        System.out.println(fakeBook.equals(fakeBookTwo)); // should be false
-        System.out.println(currentDate); // should be current date
-        System.out.println(fakeDate);
-        System.out.println(fakeDate + " " + fakeDate.isValid() + " valid fake date");
-        System.out.println(fakeDate2 + " " + fakeDate2.isValid() + " invalid fake date (month too small)");
-        System.out.println(fakeDate3 + " " + fakeDate3.isValid() + " invalid fake date (month too large)");
-        System.out.println(fakeDate4 + " " + fakeDate4.isValid() + " invalid fake date (day too large)");
-        System.out.println(fakeDate5 + " " + fakeDate5.isValid() + " valid fake date (leap year)");
-        System.out.println(fakeDate6 + " " + fakeDate6.isValid() + " invalid fake date (not leap year)");
-        System.out.println(fakeDate7 + " " + fakeDate7.isValid() + " invalid fake date (too old)");
-        System.out.println(fakeDate8 + " " + fakeDate8.isValid() + " invalid fake date (future date)");
-
-        lib.print();
-
-        lib.printByDate();
-
-        lib.printByNumber();
-
-        System.out.println("\nCheckOut Test:");
-        lib.checkOut(fakeBook);
-        lib.checkOut(fakeBook);
-        lib.print();
-
-        System.out.println("\nReturn and Remove Test:");
-        lib.returns(fakeBook);
-        System.out.println("\nRetuned...");
-        lib.remove(fakeBookThree);
-        System.out.println("\nRemoved...");
-        lib.print();
-        System.out.println("Done..");
-
-
-        // Adding a book "A,Programming in Java,11/20/2019"
-        // Removing a book "R,10005"
-        // Checking out a book "O,10005"
-        // Returning a book "I,10005"
-        // PA --> output the list of books to the console with the current sequence
-        // PD --> output the list of books by the dates published in ascending order
-        // PN --> output the list of books by the book numbers in ascending order
-
-
-
     }
+
     /**
      *Checks for a valid input for operations that modify the state of a book
      *@param number String representation of the book number
@@ -221,13 +207,13 @@ public class Kiosk {
      *@return returns true if the input is valud, false otherwise
      */
     public boolean isValidInput(String number,int numArgs , int reqArgs){
-        try {
+        try {                               //attempts to parse int, returns false if input is not valid int
             int validNumber = Integer.parseInt(number);
         } catch (NumberFormatException nfe) {
             return false;
         }
         int validNumber = Integer.parseInt(number);
-        if((validNumber >= MINNUMBER && validNumber <= MAXNUMBER) && (numArgs == reqArgs)){
+        if((validNumber >= MINNUMBER && validNumber <= MAXNUMBER) && (numArgs == reqArgs)){ //checks if serial is valid
             return true;
         }else{
             return false;
