@@ -2,7 +2,7 @@ package PayrollProcessing;
 
 public class Employee {
     private Profile profile;
-    private double payment;
+    private double payment = 0;
 
 
     public Employee(String name, String department, String dateHiredStr){
@@ -25,9 +25,7 @@ public class Employee {
         return (isEmployee);
     }
 
-    public void calculatePayment() {
-        payment = 0;
-    }
+    public void calculatePayment() {}
 
     public void setPayment(double payment) {
         this.payment = payment;

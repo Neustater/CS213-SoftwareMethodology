@@ -2,10 +2,10 @@ package PayrollProcessing;
 
 public class Parttime extends Employee{
     private double hourlyRate;
-    private double hoursWorked = 0;
+    private int hoursWorked = 0;
     public static final double OVERTIMERATE = 1.5;
     public static final double PAYPERIODLENGTH = 2;
-    public static final double MAXNORMALHOURS = 2;
+    public static final int MAXNORMALHOURS = 40;
 
     public Parttime(String name, String department, String dateHiredStr
             ,double hourlyRate){
@@ -14,7 +14,7 @@ public class Parttime extends Employee{
     }
 
     @Override
-    public void calculatePayment() {
+    public void calculatePayment() {    //TODO handle more than 100 hrs
         double normalHrs;
         double overtimeHrs = hoursWorked - MAXNORMALHOURS;
         double overtimeRate = hourlyRate * OVERTIMERATE;
@@ -46,7 +46,7 @@ public class Parttime extends Employee{
         return (isParttime);
     }
 
-    public void setHoursWorked(double hoursWorked){
+    public void setHoursWorked(int hoursWorked){
         this.hoursWorked = hoursWorked;
     }
 }
