@@ -3,9 +3,8 @@ import java.util.StringTokenizer;
 import java.util.Calendar;
 
 /**
- The Date class is used to hold a date with the variables: year, month, and day.
- This class provides an easier way to interact with the validity of dates of Books in the Library.
- Also provides easier ways to return a date for use.
+ The Date class is used to hold a date with the variables: year, month, and day
+ Provides easier ways to return a date for use.
  @author Muhammad Faizan Saiyed, Michael Neustater
  */
 
@@ -57,7 +56,7 @@ public class Date implements Comparable<Date>{
     }
 
     /**
-     * A helper method to get the year of the Book's datePublished
+     * A helper method to get the year
      * @return an int of the year
      */
     public int getYear(){
@@ -65,7 +64,7 @@ public class Date implements Comparable<Date>{
     }
 
     /**
-     * A helper method to get the month of the Book's datePublished
+     * A helper method to get the month
      * @return an int of the month
      */
     public int getMonth(){
@@ -73,7 +72,7 @@ public class Date implements Comparable<Date>{
     }
 
     /**
-     * A helper method to get the day of the Book's datePublished
+     * A helper method to get the day
      * @return an int of the day
      */
     public int getDay(){
@@ -81,8 +80,7 @@ public class Date implements Comparable<Date>{
     }
 
     /**
-     * Method to see if a date is a valid date to be used for the Library.
-     * A date with the year less than 1900 or a date beyond today’s date is invalid.
+     * Method to see if the date hired is a valid date or not.
      * @return a boolean presenting true if it is a valid date, false otherwise.
      */
     public boolean isValid() {
@@ -171,6 +169,7 @@ public class Date implements Comparable<Date>{
     public String toString(){   //returns date in mm/dd/yyyy format
         return (month + "/" + day + "/" + year);
     }
+
 
     /**
      * A method used to compare two instances of the date class
