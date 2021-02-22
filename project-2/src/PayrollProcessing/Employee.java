@@ -58,6 +58,7 @@ public class Employee {
 
     /**
      * Method made to set the payment of the employee.
+     * @param payment value to be set
      */
     public void setPayment(double payment) {
         this.payment = payment;
@@ -65,6 +66,7 @@ public class Employee {
 
     /**
      * Helper method to return the employee's profile object.
+     * @return the profile of the current employee
      */
     public Profile returnProfile() {
         return this.profile;

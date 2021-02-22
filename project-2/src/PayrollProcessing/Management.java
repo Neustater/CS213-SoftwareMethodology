@@ -68,6 +68,9 @@ public class Management extends Fulltime{
                 new DecimalFormat("0.00");
         formattedCompensation.setGroupingUsed(true);
         formattedCompensation.setGroupingSize(3);
+        if(status == null){
+            return super.toString();
+        }
         return super.toString() + "::" + status + " Compensation $" +
                 formattedCompensation.format(compensation);
     }
@@ -80,7 +83,12 @@ public class Management extends Fulltime{
     @Override
     public boolean equals(Object obj){
         if(obj instanceof Management){
-            return super.equals(obj);
+            if(((Management) obj).role == this.role) {
+                return super.equals(obj);
+            } else {
+                return false;
+            }
+
         }else{
             return false;
         }
