@@ -72,10 +72,14 @@ class CompanyTest {
     void setHours() {
         Company company = new Company();
         Employee bobFullTime = new Fulltime("BobFT", "CS", new Date("7/31/2001"), 10000);
+        Employee bobFullTime2 = new Fulltime("BobFT2", "IT", new Date("7/30/2000"), 12000);
         Employee bobManagement = new Management("BobM", "IT", new Date("10/20/1989"), 15000, 1);
+        Employee bobManagement2 = new Management("BobM2", "ECE", new Date("10/20/1990"), 17000, 2);
         Employee bobPartTime = new Parttime("BobPT", "ECE", new Date("8/20/2010"), 10);
         Employee bobPartTime2 = new Parttime("BobPT2", "IT", new Date("9/30/2000"), 20);
         Employee bobPartTime3 = new Parttime("BobPT3", "CS", new Date("10/20/2008"), 15);
+        Employee bobPartTime4 = new Parttime("BobPT4", "ECE", new Date("9/20/2009"), 11);
+
 
         company.add(bobFullTime);
         company.add(bobManagement);
@@ -88,6 +92,9 @@ class CompanyTest {
         assertTrue(company.setHours(bobPartTime3));
         assertFalse(company.setHours(bobFullTime));
         assertFalse(company.setHours(bobManagement));
+        assertFalse(company.setHours(bobPartTime4));
+        assertFalse(company.setHours(bobManagement2));
+        assertFalse(company.setHours(bobFullTime2));
 
     }
 
@@ -127,7 +134,9 @@ class CompanyTest {
         assertTrue(company.findEmployee("BobPT", "ECE", new Date("8/20/2010")).equals(bobPartTime));
         assertTrue(company.findEmployee("BobPT2", "IT", new Date("9/30/2000")).equals(bobPartTime2));
         assertTrue(company.findEmployee("BobPT3", "CS", new Date("10/20/2008")).equals(bobPartTime3));
-
+        assertTrue(company.findEmployee("BobPT4", "ECE", new Date("9/20/2009")) == (null));
+        assertTrue(company.findEmployee("BobM2", "ECE", new Date("10/20/1999")) == (null));
+        assertTrue(company.findEmployee("BobFT2", "IT", new Date("7/30/2000")) == (null));
 
     }
 
@@ -145,9 +154,13 @@ class CompanyTest {
         assertTrue(company.isEmpty());
 
         company.add(bobFullTime);
+        assertFalse(company.isEmpty());
         company.add(bobManagement);
+        assertFalse(company.isEmpty());
         company.add(bobPartTime);
+        assertFalse(company.isEmpty());
         company.add(bobPartTime2);
+        assertFalse(company.isEmpty());
         company.add(bobPartTime3);
 
         assertFalse(company.isEmpty());

@@ -63,7 +63,7 @@ public class PayrollProcessing {
                             throw new NoSuchElementException("Too many arguments!");
                     }
                     catch(NumberFormatException e) {
-                        System.out.println("Payrate is not a valid number");
+                        System.out.println("Payrate or Date is not a valid number");
                         break;
                     } catch(NoSuchElementException e){
                         System.out.println("Invalid Command!");
@@ -71,15 +71,18 @@ public class PayrollProcessing {
                     }
 
                     if (!date.isValid()){
-                        System.out.println("Invalid Date!");
+                        System.out.println(dateStr + " is not a valid date!");
                     } else if(!isValidDept(department)) {
                         System.out.println("'" + department + "' is not a valid department code.");
                     } else if(rate < MINPAY){
                         System.out.println("Pay rate cannot be negative.");
                     } else{
                         Parttime tempParttime = new Parttime(name, department, date, rate);
-                        company.add(tempParttime);
-                        System.out.println("Employee Added.");
+                        if(company.add(tempParttime)) {
+                            System.out.println("Employee Added.");
+                        }else{
+                            System.out.println("Employee is already in the list.");
+                        }
                     }
 
                     break;
@@ -94,7 +97,7 @@ public class PayrollProcessing {
                         if (command.hasMoreTokens())
                             throw new NoSuchElementException("Too many arguments!");
                     } catch(NumberFormatException e) {
-                        System.out.println("Salary is not a valid number");
+                        System.out.println("Salary or Date is not a valid number");
                         break;
                     }catch(NoSuchElementException e){
                         System.out.println("Invalid Command!");
@@ -102,15 +105,18 @@ public class PayrollProcessing {
                     }
 
                     if (!date.isValid()){       //function to check if date is valid
-                        System.out.println("Invalid Date!");
+                        System.out.println(dateStr + " is not a valid date!");
                     } else if(!isValidDept(department)) {
                         System.out.println("'" + department + "' is not a valid department code.");
                     } else if(salary < MINPAY){
                         System.out.println("Salary cannot be negative.");
                     } else {       //function to check if date is valid
                         Fulltime tempFulltime = new Fulltime(name, department, date, salary);
-                        company.add(tempFulltime);
-                        System.out.println("Employee Added.");
+                        if(company.add(tempFulltime)) {
+                            System.out.println("Employee Added.");
+                        }else{
+                            System.out.println("Employee is already in the list.");
+                        }
                     }
 
                     break;
@@ -127,7 +133,7 @@ public class PayrollProcessing {
                         if (command.hasMoreTokens())
                             throw new NoSuchElementException("Too many arguments!");
                     } catch(NumberFormatException e) {
-                        System.out.println("Manager Code or Salary is not a valid number");
+                        System.out.println("Manager Code, Date or Salary is not a valid number");
                         break;
                     } catch(NoSuchElementException e){
                         System.out.println("Invalid Command!");
@@ -135,7 +141,7 @@ public class PayrollProcessing {
                     }
 
                     if (!date.isValid()) {       //function to check if date is valid
-                        System.out.println("Invalid Date!");
+                        System.out.println(dateStr + " is not a valid date!");
                     } else if(!isValidDept(department)) {
                         System.out.println("'" + department + "' is not a valid department code.");
                     } else if(!isValidCode(code)){
@@ -145,8 +151,11 @@ public class PayrollProcessing {
                     }
                     else {       //function to check if date is valid
                         Management tempManager = new Management(name, department, date, salary, code);
-                        company.add(tempManager);
-                        System.out.println("Employee Added.");
+                        if(company.add(tempManager)) {
+                            System.out.println("Employee Added.");
+                        }else{
+                            System.out.println("Employee is already in the list.");
+                        }
                     }
 
                     break;
@@ -168,8 +177,11 @@ public class PayrollProcessing {
 
                     boolean removed = company.remove(tempRemoval);
 
+
                     if(removed){
                         System.out.println("Employee removed.");
+                    } else if (company.isEmpty()) {
+                    System.out.println("Employee database is empty!");
                     } else {
                         System.out.println("Employee doesn't exist.");
                     }
@@ -180,6 +192,11 @@ public class PayrollProcessing {
                             throw new NoSuchElementException("Too many arguments!");
                     } catch(NoSuchElementException e){
                         System.out.println("Invalid Command!");
+                        break;
+                    }
+
+                    if (company.isEmpty()) {
+                        System.out.println("Employee database is empty!");
                         break;
                     }
 
@@ -205,12 +222,21 @@ public class PayrollProcessing {
                         break;
                     }
                     catch(NoSuchElementException e){
-                        System.out.println("Invalid Command!");
+                        if (company.isEmpty()) {
+                            System.out.println("Employee database is empty!");
+                        }else {
+                            System.out.println("Invalid Command!");
+                        }
+                        break;
+                    }
+
+                    if (company.isEmpty()) {
+                        System.out.println("Employee database is empty!");
                         break;
                     }
 
                     if(hours > MAXHOURS){
-                       System.out.println("Invalid Hours: Over 100!");
+                       System.out.println("Invalid Hours: Over " + MAXHOURS+ "!");
                        break;
                     }
                     if (hours < MINHOURS) {
@@ -258,7 +284,7 @@ public class PayrollProcessing {
                     if (company.isEmpty()) {
                         System.out.println("Employee database is empty!");
                     } else {
-                        System.out.println("--Printing earning statements for all employees--");
+                        System.out.println("--Printing earning statements by date hired--");
                         company.printByDate();
                     }
                     break;
@@ -274,7 +300,7 @@ public class PayrollProcessing {
                     if (company.isEmpty()) {
                         System.out.println("Employee database is empty!");
                     } else {
-                        System.out.println("--Printing earning statements for all employees--");
+                        System.out.println("--Printing earning statements by department--");
                         company.printByDepartment();
                     }
                     break;

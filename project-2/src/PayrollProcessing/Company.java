@@ -8,7 +8,7 @@ package PayrollProcessing;
 public class Company {
     private Employee[] emplist;
     private int numEmployee;
-    static final int NOTFOUND = -1;
+    private static final int NOTFOUND = -1;
 
     /**
      * Method to create a company object with the default array of employees of size 4.
@@ -132,7 +132,7 @@ public class Company {
         index = find(employee);
 
         //Check if it was found or not
-        if(index == emplist.length) return false;
+        if(index == emplist.length || index == -1) return false;
 
         //Change the working hours (Change later)
         Employee currEmp = emplist[index];

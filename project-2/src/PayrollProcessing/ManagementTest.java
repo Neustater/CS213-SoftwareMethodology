@@ -67,7 +67,7 @@ class ManagementTest {
 
         assertTrue(bob.equals(bobSame));
         assertTrue(bob.equals(bobMoneyDiff));
-        assertFalse(bob.equals(bobRoleDiff));
+        assertTrue(bob.equals(bobRoleDiff));
         assertFalse(bob.equals(bobNameDiff));
         assertFalse(bob.equals(bobDepDiff));
         assertFalse(bob.equals(bobDateDiff));

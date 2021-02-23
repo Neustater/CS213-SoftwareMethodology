@@ -83,12 +83,7 @@ public class Management extends Fulltime{
     @Override
     public boolean equals(Object obj){
         if(obj instanceof Management){
-            if(((Management) obj).role == this.role) {
                 return super.equals(obj);
-            } else {
-                return false;
-            }
-
         }else{
             return false;
         }
