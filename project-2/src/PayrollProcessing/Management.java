@@ -13,8 +13,8 @@ public class Management extends Fulltime{
     double bonus;
     double compensation;
     static final String MANAGER = "Manager";
-    static final String DIRECTOR = "Director";
     static final String DEPTHEAD = "Department Head";
+    static final String DIRECTOR = "Director";
     String status;
 
     /**
@@ -36,10 +36,10 @@ public class Management extends Fulltime{
                 status =MANAGER;
                 break;
             case 2: bonus = 9500;
-                status =DIRECTOR;
+                status =DEPTHEAD;
                 break;
             case 3: bonus = 12000;
-                status =DEPTHEAD;
+                status =DIRECTOR;
                 break;
             default:
                 bonus = 0;
