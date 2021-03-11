@@ -388,6 +388,12 @@ public class Controller{
         try {
             rate = Integer.parseInt(rateInput.getText());
         }catch (NumberFormatException e) {
+            if(rateInput.getText().equals("")){
+                rate = 0;
+                validRateInput = false;
+                isValidInput();
+                return;
+            }
             validRateInput = false;
             rate = 0;
             consoleOutput.appendText("Please enter a numeric value for the Pay Rate.\n");
@@ -544,10 +550,14 @@ public class Controller{
                         setHoursButton.setDisable(true);
                         addButton.setDisable(false);
                         removeButton.setDisable(true);
+                    }else if(validRateInput && (hoursInput.getText().isEmpty())) {
+                        removeButton.setDisable(true);
+                        addButton.setDisable(false);
+                        setHoursButton.setDisable(true);
                     }else if(validHoursInput && (rateInput.getText().isEmpty())) {
                         removeButton.setDisable(true);
                         addButton.setDisable(true);
-                        setHoursButton.setDisable(true);
+                        setHoursButton.setDisable(false);
                     } else if((hoursInput.getText().isEmpty()) && (rateInput.getText().isEmpty())) {
                         removeButton.setDisable(false);
                         addButton.setDisable(true);

@@ -136,10 +136,10 @@
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="331.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="28.0" prefWidth="95.0" text="Rate:  " />
+                        <TextField fx:id="rateInput" onKeyTyped="#setRate" prefHeight="28.0" prefWidth="60.0" />
                         <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="95.0" text="Hours Worked:  " />
                         <TextField fx:id="hoursInput" onKeyTyped="#setHours" prefHeight="28.0" prefWidth="60.0" />
-                        <Label alignment="CENTER_RIGHT" contentDisplay="TOP" prefHeight="28.0" prefWidth="51.0" text="Rate:  " />
-                        <TextField fx:id="rateInput" onKeyTyped="#setRate" prefHeight="28.0" prefWidth="60.0" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="419.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
