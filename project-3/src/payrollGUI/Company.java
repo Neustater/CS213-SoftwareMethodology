@@ -171,26 +171,6 @@ public class Company {
     }
 
     /**
-     * Method to print out the current array of employees in the Company.
-     */
-    public void print() { //print earning statements for all employee
-
-        for(int index = 0; index < emplist.length; index++) { //
-            if (emplist[index] == null) {
-                continue;
-            }
-            if (emplist[index] instanceof Parttime) {
-                System.out.println(emplist[index].toString());
-            } else if (emplist[index] instanceof Fulltime) {
-                if (emplist[index] instanceof Management) {
-                    System.out.println(emplist[index].toString());
-                } else System.out.println(emplist[index].toString());
-            }
-        }
-
-    }
-
-    /**
      * Method to print the employees to the Console Output for the GUI in Controller.
      * @param consoleOutput refers to the Text Area in the GUI, for Controller Class.
      */
@@ -299,22 +279,6 @@ public class Company {
             emplist[minIndex] = emplist[outer];
             emplist[outer] = tempBook;
         }
-    }
-
-    /**
-     * Method to print out the current array of employees in the company sorted by their department.
-     */
-    public void printByDepartment() { //print earning statements by department (CS --> ECE --> IT)
-        sortByDepartment();
-        print();
-    }
-
-    /**
-     * Method to print out the current array of employees in the company sorted by their date hired.
-     */
-    public void printByDate() { //print earning statements by date hired
-        sortByDate();
-        print();
     }
 
     /**
