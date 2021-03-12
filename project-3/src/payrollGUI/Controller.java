@@ -22,11 +22,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
+/**
+ The Controller class is used to control the GUI.
+ Allows access to simulate a company through a GUI.
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
 public class Controller{
     static final int MIN_PAY = 0;
     static final int MIN_HOURS = 0;
     static final int MAX_HOURS = 100;
     static final String[] DEPTS = {"CS","ECE","IT"};
+    static final String[] STATUS = {"PartTime","FullTime","Manager"};
     static final int[] CODES = {1,2,3};
 
     private boolean validNameInput = false;
@@ -39,7 +45,7 @@ public class Controller{
 
     //Data Regarding Current Employee
     String name;
-    String department;
+    String department = DEPTS[0];
     double rate = 0;
     double salary;
     int code;
@@ -65,38 +71,41 @@ public class Controller{
     @FXML
     private Button clearButton, addButton, removeButton, setHoursButton;
 
+    /**
+     * Method to add an employee from the GUI inputs.
+     * Occurs after the add button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void addEmployee(ActionEvent event) {
 
+        boolean empAdded = false;
         if(fulltimeButton.isSelected()){
-            double annualSalary =  Double.valueOf(salaryInput.getText());
             if(csButton.isSelected()){
-                Fulltime emp = new Fulltime(name, DEPTS[0], dateHired, annualSalary);
-                company.add(emp);
+                Fulltime emp = new Fulltime(name, DEPTS[0], dateHired, salary);
+                empAdded = company.add(emp);
             } else if(eceButton.isSelected()){
-                Fulltime emp = new Fulltime(name, DEPTS[1], dateHired, annualSalary);
-                company.add(emp);
+                Fulltime emp = new Fulltime(name, DEPTS[1], dateHired, salary);
+                empAdded = company.add(emp);
             } else if(itButton.isSelected()){
-                Fulltime emp = new Fulltime(name, DEPTS[2], dateHired, annualSalary);
-                company.add(emp);
+                Fulltime emp = new Fulltime(name, DEPTS[2], dateHired, salary);
+                empAdded = company.add(emp);
             }
         } else if(parttimeButton.isSelected()){
-            double hourlyRate = Double.valueOf(rateInput.getText());
             if(csButton.isSelected()){
-                Parttime emp = new Parttime(name, DEPTS[0], dateHired, hourlyRate);
-                company.add(emp);
+                Parttime emp = new Parttime(name, DEPTS[0], dateHired, rate);
+                empAdded = company.add(emp);
                 emp.setHours(hours);
             } else if(eceButton.isSelected()){
-                Parttime emp = new Parttime(name, DEPTS[1], dateHired, hourlyRate);
-                company.add(emp);
+                Parttime emp = new Parttime(name, DEPTS[1], dateHired, rate);
+                empAdded = company.add(emp);
                 emp.setHours(hours);
             } else if(itButton.isSelected()){
-                Parttime emp = new Parttime(name, DEPTS[2], dateHired, hourlyRate);
-                company.add(emp);
+                Parttime emp = new Parttime(name, DEPTS[2], dateHired, rate);
+                empAdded = company.add(emp);
                 emp.setHours(hours);
             }
         } else if(managementButton.isSelected()) {
-            double annualSalary = Double.valueOf(salaryInput.getText());
 
             int role = 0;
             if (managerButton.isSelected()) {
@@ -108,19 +117,28 @@ public class Controller{
             }
 
             if (csButton.isSelected()) {
-                Management emp = new Management(name, DEPTS[0], dateHired, annualSalary, role);
-                company.add(emp);
+                Management emp = new Management(name, DEPTS[0], dateHired, salary, role);
+                empAdded = company.add(emp);
             } else if (eceButton.isSelected()) {
-                Management emp = new Management(name, DEPTS[1], dateHired, annualSalary, role);
-                company.add(emp);
+                Management emp = new Management(name, DEPTS[1], dateHired, salary, role);
+                empAdded = company.add(emp);
             } else if (itButton.isSelected()) {
-                Management emp = new Management(name, DEPTS[2], dateHired, annualSalary, role);
-                company.add(emp);
+                Management emp = new Management(name, DEPTS[2], dateHired, salary, role);
+                empAdded = company.add(emp);
             }
         }
-        consoleOutput.appendText("Employee Added!\n");
+        if(empAdded) {
+            consoleOutput.appendText("Employee Added!\n");
+        }else{
+            consoleOutput.appendText("Employee already exists!\n");
+        }
     }
 
+    /**
+     * Method to calculate the payments for employees in the company.
+     * Occurs after the calculate payments button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void calculatePayments(ActionEvent event) {
         if (company.isEmpty()) {
@@ -131,23 +149,43 @@ public class Controller{
         consoleOutput.appendText("Calculation of employee payments is done.\n");
     }
 
+    /**
+     * Method to clear all inputs and Text Area in the GUI.
+     * Occurs after the clear button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void clear(ActionEvent event) {
         consoleOutput.clear();
         salaryInput.clear();
         validSalaryInput = false;
+        salary = 0;
         nameInput.clear();
         validNameInput = false;
+        name  = "";
         hoursInput.clear();
         validHoursInput = false;
+        hours = 0;
         rateInput.clear();
         validRateInput = false;
-        dateInput.setValue(null);
+        rate = 0;
+        try {
+            dateInput.setValue(null);
+        }catch(Exception e){
+            isValidInput();
+            return;
+        }
+        dateHired = null;
         isValidInput();
 
 
     }
 
+    /**
+     * Method to write the Employee Database out to a file.
+     * Occurs after the export button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void exportFile(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -171,6 +209,11 @@ public class Controller{
         company.outputToFile(targetFile, consoleOutput);
     }
 
+    /**
+     * Method to take in an Employee Database from a file to the GUI.
+     * Occurs after the import button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void importFile(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -190,6 +233,7 @@ public class Controller{
             consoleOutput.appendText("No File Selected: Please Select a File.\n");
             return;
         }
+        //Create variables for taking in inputs from the File.
         BufferedReader reader;
         String name;
         String department;
@@ -243,6 +287,11 @@ public class Controller{
 
     }
 
+    /**
+     * Method to print the employees in the company to the Text Area in the GUI.
+     * Occurs after the print button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void print(ActionEvent event) {
         if (company.isEmpty()) {
@@ -253,6 +302,11 @@ public class Controller{
         }
     }
 
+    /**
+     * Method to print the employees in the company by their date hired to the Text Area in the GUI.
+     * Occurs after the print by date button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void printDate(ActionEvent event) {
         if (company.isEmpty()) {
@@ -264,6 +318,11 @@ public class Controller{
         }
     }
 
+    /**
+     * Method to print the employees in the company by their department to the Text Area in the GUI.
+     * Occurs after the print by department button is pressed in the GUI.
+     * @param event checks for a button press and runs the method.
+     */
     @FXML
     void printDept(ActionEvent event) {
         if (company.isEmpty()) {
@@ -275,6 +334,11 @@ public class Controller{
         }
     }
 
+    /**
+     * Method to set the name of the current Employee from the GUI.
+     * Occurs after text has been written to the name input in the GUI.
+     * @param event checks for a key press and runs the method.
+     */
     @FXML
     void setName(KeyEvent event) {
         name = nameInput.getText();
@@ -287,21 +351,44 @@ public class Controller{
         isValidInput();
     }
 
+    /**
+     * Method to set the department of the current Employee from the GUI.
+     * Occurs after a selection for the CS option has taken place from the GUI.
+     * @param event checks for a button press from the GUI.
+     */
     @FXML
     void setCS(ActionEvent event) {
-        department = DEPTS[1];
+        department = DEPTS[0];
+        isValidInput();
     }
 
+    /**
+     * Method to set the department of the current Employee from the GUI.
+     * Occurs after a selection for the ECE option has taken place from the GUI.
+     * @param event checks for a button press from the GUI.
+     */
     @FXML
     void setECE(ActionEvent event) {
-        department = DEPTS[2];
+        department = DEPTS[1];
+        isValidInput();
     }
 
+    /**
+     * Method to set the department of the current Employee from the GUI.
+     * Occurs after a selection for the IT option has taken place from the GUI.
+     * @param event checks for a button press from the GUI.
+     */
     @FXML
     void setIT(ActionEvent event) {
-        department = DEPTS[1];
+        department = DEPTS[2];
+        isValidInput();
     }
 
+    /**
+     * Method to set the date of the current Employee from the GUI.
+     * Occurs after a Date has been chosen from the Date Picker.
+     * @param event checks for a select from the Calender in the GUI.
+     */
     @FXML
     void setDate(Event event) {
         try {
@@ -325,12 +412,22 @@ public class Controller{
         isValidInput();
     }
 
+    /**
+     * Method to set Employee as a Part time Employee from the GUI selection.
+     * Occurs after the Part Time selection has been selected from the GUI.
+     * @param event checks for a selection from the GUI.
+     */
     @FXML
     void setPartTime(ActionEvent event) {
         isParttime();
         isValidInput();
     }
 
+    /**
+     * Method to set Employee as a Full time Employee from the GUI selection.
+     * Occurs after the Full Time selection has been selected from the GUI.
+     * @param event checks for a selection from the GUI.
+     */
     @FXML
     void setFullTime(ActionEvent event) {
         isFulltime();
@@ -340,9 +437,22 @@ public class Controller{
         managerButton.setSelected(false);
         deptHeadButton.setSelected(false);
         directorButton.setSelected(false);
+        try {
+            salary = Double.parseDouble(salaryInput.getText());
+        }catch (NumberFormatException e) {
+            validSalaryInput = false;
+            salary = 0;
+            isValidInput();
+            return;
+        }
         isValidInput();
     }
 
+    /**
+     * Method to set Employee as a Management Employee from the GUI selection.
+     * Occurs after the Management selection has been selected from the GUI.
+     * @param event checks for a selection from the GUI.
+     */
     @FXML
     void setManagement(ActionEvent event) {
         isFulltime();
@@ -350,9 +460,24 @@ public class Controller{
         managerButton.setDisable(false);
         deptHeadButton.setDisable(false);
         directorButton.setDisable(false);
+        validRateInput = false;
+        validHoursInput = false;
+        try {
+            salary = Double.parseDouble(salaryInput.getText());
+        }catch (NumberFormatException e) {
+            validSalaryInput = false;
+            salary = 0;
+            isValidInput();
+            return;
+        }
         isValidInput();
     }
 
+    /**
+     * Method to set hours for the Employee in the GUI.
+     * Occurs after the text for the working hours is written in the GUI.
+     * @param event checks for a key press from the GUI.
+     */
     @FXML
     void setHours(KeyEvent event) {
 
@@ -383,10 +508,15 @@ public class Controller{
         isValidInput();
     }
 
+    /**
+     * Method to set hourly rate for the Employee in the GUI.
+     * Occurs after the text for the hourly rate is written in the GUI.
+     * @param event checks for a key press from the GUI.
+     */
     @FXML
     void setRate(KeyEvent event) {
         try {
-            rate = Integer.parseInt(rateInput.getText());
+            rate = Double.parseDouble(rateInput.getText());
         }catch (NumberFormatException e) {
             if(rateInput.getText().equals("")){
                 rate = 0;
@@ -410,6 +540,11 @@ public class Controller{
         isValidInput();
     }
 
+    /**
+     * Method to set hours for the Employee in the GUI.
+     * Occurs after a button press from the set hours button in the GUI.
+     * @param event checks for a button press from the GUI.
+     */
     @FXML
     void setHoursButton(ActionEvent event) {
         if (company.isEmpty()) {
@@ -431,6 +566,11 @@ public class Controller{
 
     }
 
+    /**
+     * Method to set the Salary for the Employee in the GUI.
+     * Occurs after text has been written to the salary input in the GUI.
+     * @param event checks for a key press from the GUI.
+     */
     @FXML
     void setSalary(KeyEvent event) {
         try {
@@ -452,24 +592,45 @@ public class Controller{
         isValidInput();
     }
 
+    /**
+     * Method to see if the Employee is part of Management and a manager in the GUI.
+     * Occurs after selection has been done to the Employee type in the GUI.
+     * @param event checks for a selection from the GUI.
+     */
     @FXML
     void setManager(ActionEvent event) {
+        code = CODES[0];
+    }
+
+    /**
+     * Method to see if the Employee is part of Management and a department head in the GUI.
+     * Occurs after selection has been done to the Employee type in the GUI.
+     * @param event checks for a selection from the GUI.
+     */
+    @FXML
+    void setDeptHead(ActionEvent event) {
         code = CODES[1];
     }
 
+    /**
+     * Method to see if the Employee is part of Management and a director in the GUI.
+     * Occurs after selection has been done to the Employee type in the GUI.
+     * @param event checks for a selection from the GUI.
+     */
     @FXML
-    void setDeptHead(ActionEvent event) {
+    void setDirector(ActionEvent event) {
         code = CODES[2];
     }
 
-    @FXML
-    void setDirector(ActionEvent event) {
-        code = CODES[3];
-    }
-
+    /**
+     * Method to remove an Employee from the company in the GUI.
+     * Occurs after remove button has been pressed in the GUI.
+     * @param event checks for a button press from the GUI.
+     */
     @FXML
     void removeEmployee(ActionEvent event) {
         String dept = null;
+        String employeeType = null;
         if(csButton.isSelected()){
             dept = DEPTS[0];
         } else if(eceButton.isSelected()){
@@ -477,27 +638,39 @@ public class Controller{
         } else if(itButton.isSelected()){
             dept = DEPTS[2];
         }
-        Employee tempRemoval = company.findEmployee(name, dept, dateHired);
+
+        if(parttimeButton.isSelected()){
+            employeeType = STATUS[0];
+        } else if(fulltimeButton.isSelected()){
+            employeeType = STATUS[1];
+        } else if(managementButton.isSelected()){
+            employeeType = STATUS[2];
+        }
+
+        if(employeeType == null) {
+            consoleOutput.appendText("Select Employee Type!\n");
+            return;
+        }
+
+        Employee tempRemoval = company.findEmployeeForController(name, dept, dateHired, employeeType);
 
         if(tempRemoval == null){
             consoleOutput.appendText("Employee doesn't exist.\n");
             return;
         }
 
-        if(tempRemoval instanceof Fulltime){
-            if(tempRemoval instanceof Management) {
-                if(!managementButton.isSelected()){
-                    consoleOutput.appendText("Employee doesn't exist.\n");
-                    return;
-                }
-            } else {
-                if (!fulltimeButton.isSelected()) {
-                    consoleOutput.appendText("Employee doesn't exist.\n");
-                    return;
-                }
+        if(tempRemoval instanceof Management){
+            if (!managementButton.isSelected()) {
+                consoleOutput.appendText("Employee doesn't exist.\n");
+                return;
             }
         } else if(tempRemoval instanceof Parttime) {
             if(!parttimeButton.isSelected()){
+                consoleOutput.appendText("Employee doesn't exist.\n");
+                return;
+            }
+        } else if(tempRemoval instanceof Fulltime) {
+            if(!fulltimeButton.isSelected()){
                 consoleOutput.appendText("Employee doesn't exist.\n");
                 return;
             }
@@ -515,6 +688,9 @@ public class Controller{
 
     }
 
+    /**
+     * Method to disable and enable certain buttons and selections if the Employee type of Part time is selected.
+     */
     private void isParttime(){
         managerButton.setDisable(true);
         deptHeadButton.setDisable(true);
@@ -529,8 +705,12 @@ public class Controller{
 
         salaryInput.setDisable(true);
         salaryInput.clear();
+
     }
 
+    /**
+     * Method to disable and enable certain buttons and selections if the Employee type of Full time is selected.
+     */
     private void isFulltime(){
 
         rateInput.setDisable(true);
@@ -540,8 +720,12 @@ public class Controller{
         setHoursButton.setDisable(true);
 
         salaryInput.setDisable(false);
+
     }
 
+    /**
+     * Method to check if the Date selected from the Calender is a valid date.
+     */
     private void isValidInput(){
         if(validNameInput) {
             if (validDateInput) {
@@ -572,10 +756,14 @@ public class Controller{
                         setHoursButton.setDisable(true);
                         addButton.setDisable(false);
                         removeButton.setDisable(true);
-                    } else {
+                    } else if((salaryInput.getText().isEmpty())) {
+                        removeButton.setDisable(false);
+                        addButton.setDisable(true);
+                        setHoursButton.setDisable(true);
+                    }else {
                         setHoursButton.setDisable(true);
                         addButton.setDisable(true);
-                        removeButton.setDisable(false);
+                        removeButton.setDisable(true);
                     }
                 }
             }else{

@@ -1,3 +1,8 @@
+/**
+ Module-info file which states the required packages
+ from JavaFX for payrollGUI
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
 module project {
     requires javafx.base;
     requires javafx.controls;

@@ -190,7 +190,10 @@ public class Company {
 
     }
 
-
+    /**
+     * Method to print the employees to the Console Output for the GUI in Controller.
+     * @param consoleOutput refers to the Text Area in the GUI, for Controller Class.
+     */
     public void printToController(TextArea consoleOutput) { //print earning statements for all employee
         for(int index = 0; index < emplist.length; index++) { //
             if (emplist[index] == null) {
@@ -206,6 +209,11 @@ public class Company {
         }
     }
 
+    /**
+     * Method to write the Employee Database to a file, from the GUI.
+     * @param targetFile refers to the File the Employee Database is being written to.
+     * @param consoleOutput refers to the Text Area in the GUI, for Controller Class.
+     */
     public void outputToFile(File targetFile, TextArea consoleOutput) { //print earning statements for all employee
         try {
             FileWriter fileWriter = new FileWriter(targetFile, false);
@@ -228,6 +236,9 @@ public class Company {
         }
     }
 
+    /**
+     * Method to sort the employees in the company by their department.
+     */
     public void sortByDepartment() { //print earning statements by department (CS --> ECE --> IT)
 
         //Sort it by department
@@ -256,6 +267,10 @@ public class Company {
             }
         }
     }
+
+    /**
+     * Method to sort the employees in the company by their date hired.
+     */
     public void sortByDate() {
         Employee tempBook;
         Date innerDate;
@@ -313,6 +328,56 @@ public class Company {
         Employee finder = new Employee(name, department, dateHired);
         Employee found;
         int index = find(finder);
+        if(index == NOT_FOUND)
+        {
+            found = null;
+        }else{
+            found = emplist[index];
+        }
+        return found;
+    }
+
+    /**
+     * Method to find an employee based on their name, department, dateHired, and employee type.
+     * @param name takes in the name of the employee object.
+     * @param department takes in the department of the employee object.
+     * @param dateHired takes in the date hired of the employee object.
+     * @param employeeType takes in the type of Employee of the employee object.
+     * @return the employee object that is found within the company.
+     */
+    public Employee findEmployeeForController(String name, String department, Date dateHired, String employeeType){
+        Employee emp = null;
+        double salary = 0;
+        double hourlyRate = 0;
+        int role = 0;
+
+        if(employeeType.equals("FullTime")){
+            emp = new Fulltime(name, department, dateHired, salary);
+        } else if(employeeType.equals("PartTime")){
+            emp = new Parttime(name, department, dateHired, hourlyRate);
+        } else if(employeeType.equals("Management")){
+            emp =  new Management(name, department, dateHired, salary, role);
+        }
+
+        if(emp == null) return null;
+
+        int index = NOT_FOUND;
+        for(int i = 0; i < numEmployee; i++){
+            if(emp.equals(emplist[i])){
+                if(emplist[i] instanceof Management && emp instanceof Management){
+                    index = i;
+                    break;
+                } else if(emplist[i] instanceof Parttime && emp instanceof Parttime){
+                    index = i;
+                    break;
+                } else if(emplist[i] instanceof Fulltime && emp instanceof Fulltime){
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        Employee found;
         if(index == NOT_FOUND)
         {
             found = null;

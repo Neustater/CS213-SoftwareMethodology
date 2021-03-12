@@ -100,7 +100,7 @@ public class Date implements Comparable<Date>{
                 if(month > curMonth){
                     return isValidDate;
                 }
-                else if(day > curDay){
+                else if((month == curMonth) && (day > curDay)){
                     return isValidDate;
                 }
         }
