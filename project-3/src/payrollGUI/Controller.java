@@ -298,7 +298,7 @@ public class Controller{
             consoleOutput.setText("Employee database is empty!\n");
         } else {
             consoleOutput.setText("--Printing earning statements for all employees--\n");
-            company.printToController(consoleOutput);
+            company.print(consoleOutput);
         }
     }
 
@@ -314,7 +314,7 @@ public class Controller{
         } else {
             consoleOutput.setText("--Printing earning statements by date hired--\n");
             company.sortByDate();
-            company.printToController(consoleOutput);
+            company.print(consoleOutput);
         }
     }
 
@@ -330,7 +330,7 @@ public class Controller{
         } else {
             consoleOutput.setText("--Printing earning statements by department--\n");
             company.sortByDepartment();
-            company.printToController(consoleOutput);
+            company.print(consoleOutput);
         }
     }
 

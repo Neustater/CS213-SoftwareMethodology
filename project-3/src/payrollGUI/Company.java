@@ -174,7 +174,7 @@ public class Company {
      * Method to print the employees to the Console Output for the GUI in Controller.
      * @param consoleOutput refers to the Text Area in the GUI, for Controller Class.
      */
-    public void printToController(TextArea consoleOutput) { //print earning statements for all employee
+    public void print(TextArea consoleOutput) { //print earning statements for all employee
         for(int index = 0; index < emplist.length; index++) { //
             if (emplist[index] == null) {
                 continue;

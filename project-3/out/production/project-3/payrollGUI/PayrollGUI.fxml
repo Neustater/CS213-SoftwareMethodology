@@ -75,12 +75,12 @@
                               <ToggleGroup fx:id="departmentGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="itButton" mnemonicParsing="false" onAction="#setIT" text="IT" toggleGroup="$departmentGroup">
+                        <RadioButton fx:id="eceButton" mnemonicParsing="false" onAction="#setECE" text="ECE" toggleGroup="$departmentGroup">
                            <font>
                               <Font size="11.0" />
                            </font>
                         </RadioButton>
-                        <RadioButton fx:id="eceButton" mnemonicParsing="false" onAction="#setECE" text="ECE" toggleGroup="$departmentGroup">
+                        <RadioButton fx:id="itButton" mnemonicParsing="false" onAction="#setIT" text="IT" toggleGroup="$departmentGroup">
                            <font>
                               <Font size="11.0" />
                            </font>
