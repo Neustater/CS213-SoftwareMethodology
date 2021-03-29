@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="337.0" prefWidth="342.0" style="-fx-background-color: #d6ba81#d6ba81;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafeGUI.OrderCoffeeController">
+   <children>
+      <Label layoutX="78.0" layoutY="23.0" text="Order Coffee">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="88.0" fitWidth="170.0" layoutX="93.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../iconImages/coffee.jpg" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="sizeList" layoutX="225.0" layoutY="172.0" prefHeight="27.0" prefWidth="89.0" />
+      <ComboBox fx:id="quantityList" layoutX="258.0" layoutY="205.0" prefHeight="27.0" prefWidth="56.0" />
+      <Button layoutX="241.0" layoutY="296.0" mnemonicParsing="false" onAction="#addToOrderButton" text="Add to Order" />
+      <TextField fx:id="subTotalBox" editable="false" layoutX="78.0" layoutY="296.0" />
+      <Label layoutX="17.0" layoutY="301.0" text="Sub Total:" />
+      <CheckBox fx:id="creamBox" layoutX="22.0" layoutY="185.0" mnemonicParsing="false" onAction="#clickCream" text="Cream" />
+      <CheckBox fx:id="milkBox" layoutX="22.0" layoutY="223.0" mnemonicParsing="false" onAction="#clickMilk" text="Milk" />
+      <CheckBox fx:id="syrupBox" layoutX="123.0" layoutY="185.0" mnemonicParsing="false" onAction="#clickSyrup" text="Syrup" />
+      <CheckBox fx:id="caramelBox" layoutX="123.0" layoutY="223.0" mnemonicParsing="false" onAction="#clickCaramel" text="Caramel" />
+      <CheckBox fx:id="whippedBox" layoutX="22.0" layoutY="262.0" mnemonicParsing="false" onAction="#clickWhipped" text="Whipped Cream" />
+   </children>
+</AnchorPane>
