@@ -10,23 +10,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="456.0" style="-fx-background-color: #f7f1ba#f7f1ba;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafeGUI.OrderDonutsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="549.0" style="-fx-background-color: #f7f1ba#f7f1ba;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafeGUI.OrderDonutsController">
    <children>
-      <ComboBox fx:id="cakesList" layoutX="14.0" layoutY="78.0" prefHeight="27.0" prefWidth="136.0" />
-      <ComboBox fx:id="quantityList" layoutX="196.0" layoutY="113.0" prefHeight="27.0" prefWidth="64.0" />
-      <Label layoutX="137.0" layoutY="18.0" text="Order Donuts">
+      <ComboBox fx:id="cakesList" layoutX="14.0" layoutY="78.0" onHidden="#setCake" prefHeight="27.0" prefWidth="136.0" />
+      <ComboBox fx:id="quantityList" layoutX="198.0" layoutY="113.0" onHidden="#setQuantity" prefHeight="27.0" prefWidth="64.0" />
+      <Label layoutX="156.0" layoutY="18.0" text="Order Donuts">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <ListView fx:id="flavorsList" layoutX="14.0" layoutY="113.0" prefHeight="200.0" prefWidth="176.0" />
-      <ListView fx:id="addedFlavorsList" layoutX="268.0" layoutY="113.0" prefHeight="200.0" prefWidth="176.0" />
+      <ListView fx:id="flavorsList" layoutX="14.0" layoutY="113.0" prefHeight="224.0" prefWidth="176.0" />
+      <ListView fx:id="addedFlavorsList" layoutX="268.0" layoutY="113.0" prefHeight="224.0" prefWidth="266.0" />
       <Button layoutX="210.0" layoutY="160.0" mnemonicParsing="false" onAction="#addButton" text="&gt;&gt;" />
       <Button layoutX="210.0" layoutY="200.0" mnemonicParsing="false" onAction="#removeButton" text="&lt;&lt;" />
-      <Button layoutX="298.0" layoutY="322.0" mnemonicParsing="false" onAction="#addToOrderButton" text="Add to Order" />
-      <TextField fx:id="subTotalBox" editable="false" layoutX="131.0" layoutY="322.0" />
-      <Label layoutX="70.0" layoutY="327.0" text="Sub Total:" />
-      <ImageView fitHeight="87.0" fitWidth="125.0" layoutX="324.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="orderButton" layoutX="298.0" layoutY="343.0" mnemonicParsing="false" onAction="#addToOrderButton" text="Add to Order" />
+      <TextField fx:id="subTotalBox" editable="false" layoutX="131.0" layoutY="343.0" />
+      <Label layoutX="70.0" layoutY="348.0" text="Sub Total:" />
+      <ImageView fitHeight="107.0" fitWidth="193.0" layoutX="372.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../iconImages/donuts.jpg" />
          </image>

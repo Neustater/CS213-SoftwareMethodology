@@ -2,33 +2,59 @@ package cafeGUI;
 
 import java.util.ArrayList;
 
-public class StoreOrders {
-    private int orderNumber = 0;
+/**
+ The StoreOrders Class allows the user to create a StoreOrders object.
+ Also allows access to add Orders to the StoreOrders.
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
+public class StoreOrders implements Customizable{
     private ArrayList<Order> orders = new ArrayList<Order>();
 
-    private void grow() {
-        int curr_catalogSize = orders.size();
-        int new_catalogSize = curr_catalogSize + 4;
+    /**
+     * Constructor to create a StoreOrders Object
+     */
+    public StoreOrders(){
 
-        ArrayList<Order> newItems = new ArrayList<Order>(new_catalogSize); //array with new catalog capacity
-        newItems.addAll(orders);
-        orders = newItems;
     }
 
-    public boolean add(Order orderItems){
-        if(orderItems == null) return false;
-        orders.add(orderItems);
-        return true;
+    /**
+     * Method to add a Order to the orders Arraylist in the StoreOrders Object.
+     * @param object takes in to check if it is a Orders object, and adds it into the orders ArrayList.
+     * @return a boolean being true if the object successfully been added, false otherwise.
+     */
+    public boolean add(Object object){
+        if(object instanceof Order){
+            Order orderItems = (Order)object;
+            if(orderItems == null) return false;
+            orders.add(orderItems);
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public boolean remove(Order orderItems){
-        if(orderItems == null) return false;
-        if(!orders.contains(orderItems)) return false;
-        orders.remove(orderItems);
-        return true;
+    /**
+     * Method to remove a Order from the orders Arraylist in the StoreOrders Object.
+     * @param object takes in to check if it is a Orders object, and removes it into the orders ArrayList.
+     * @return a boolean being true if the object successfully been removed, false otherwise.
+     */
+    public boolean remove(Object object){
+        if(object instanceof Order){
+            Order orderItems = (Order)object;
+            if(orderItems == null) return false;
+            if(!orders.contains(orderItems)) return false;
+            orders.remove(orderItems);
+            return true;
+        }else {
+            return false;
+        }
     }
 
-    public ArrayList<Order> returnOrder(){
-        return orders;
+
+    /**
+     * Method to return the orders in the StoreOrders object.
+     * @return an ArrayList containing the orders.
+     */
+    public ArrayList<Order> returnOrder() { return orders;
     }
 }

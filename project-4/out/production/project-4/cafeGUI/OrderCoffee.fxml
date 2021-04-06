@@ -22,9 +22,9 @@
             <Image url="@../iconImages/coffee.jpg" />
          </image>
       </ImageView>
-      <ComboBox fx:id="sizeList" layoutX="225.0" layoutY="172.0" prefHeight="27.0" prefWidth="89.0" />
-      <ComboBox fx:id="quantityList" layoutX="258.0" layoutY="205.0" prefHeight="27.0" prefWidth="56.0" />
-      <Button layoutX="241.0" layoutY="296.0" mnemonicParsing="false" onAction="#addToOrderButton" text="Add to Order" />
+      <ComboBox fx:id="sizeList" layoutX="225.0" layoutY="172.0" onHidden="#setSize" prefHeight="27.0" prefWidth="89.0" />
+      <ComboBox fx:id="quantityList" layoutX="258.0" layoutY="205.0" onHidden="#setQuantity" prefHeight="27.0" prefWidth="56.0" />
+      <Button fx:id="orderButton" layoutX="241.0" layoutY="296.0" mnemonicParsing="false" onAction="#addToOrderButton" text="Add to Order" />
       <TextField fx:id="subTotalBox" editable="false" layoutX="78.0" layoutY="296.0" />
       <Label layoutX="17.0" layoutY="301.0" text="Sub Total:" />
       <CheckBox fx:id="creamBox" layoutX="22.0" layoutY="185.0" mnemonicParsing="false" onAction="#clickCream" text="Cream" />

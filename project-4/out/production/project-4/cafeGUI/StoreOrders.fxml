@@ -15,11 +15,21 @@
             <Font size="31.0" />
          </font>
       </Label>
-      <Label layoutX="159.0" layoutY="84.0" text="Total" />
-      <TextField fx:id="total" editable="false" layoutX="209.0" layoutY="79.0" prefHeight="24.0" prefWidth="80.0" />
-      <ComboBox fx:id="quantityList" layoutX="29.0" layoutY="79.0" prefHeight="27.0" prefWidth="97.0" />
+      <Label layoutX="159.0" layoutY="76.0" text="Total" />
+      <TextField fx:id="totalBox" editable="false" layoutX="209.0" layoutY="71.0" prefHeight="24.0" prefWidth="80.0" />
+      <ComboBox fx:id="orderListBox" layoutX="29.0" layoutY="71.0" onHidden="#setOrder" prefHeight="27.0" prefWidth="97.0" />
       <ListView fx:id="ordersList" layoutX="16.0" layoutY="117.0" prefHeight="221.0" prefWidth="288.0" />
-      <Button layoutX="187.0" layoutY="350.0" mnemonicParsing="false" onAction="#exportOrders" text="Export Orders" />
-      <Button layoutX="60.0" layoutY="350.0" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel Order" />
+      <Button layoutX="187.0" layoutY="356.0" mnemonicParsing="false" onAction="#exportOrders" text="Export Orders" />
+      <Button layoutX="60.0" layoutY="356.0" mnemonicParsing="false" onAction="#cancelOrder" text="Cancel Order" />
+      <Label layoutX="16.0" layoutY="339.0" text="*Item Prices Displayed Before Tax">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <Label layoutX="254.0" layoutY="98.0" text="*includes tax">
+         <font>
+            <Font size="8.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -1,58 +1,77 @@
 package cafeGUI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Donuts extends MenuItem{
+/**
+ The Donut Class allows the user to create a Donut object.
+ Also allows access to add flavors to the donut.
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
+public abstract class Donuts extends MenuItem implements Customizable{
 
-    private String type;
-    private double price;
+    private int quantity;
     private ArrayList<String> flavors = new ArrayList<String>();
 
-    private static final double YEAST_DONUT_PRICE = 1.39;
-    private static final double CAKE_DONUT_PRICE = 1.59;
-    private static final double DONUT_HOLE_PRICE = 0.33;
-
-    public Donuts(String donutType, ArrayList<String> newFlavors){
-        //type = do
-        flavors = newFlavors;
-    }
-
-    private void grow() {
-        int curr_catalogSize = flavors.size();
-        int new_catalogSize = curr_catalogSize + 4;
-
-        ArrayList<String> newItems = new ArrayList<String>(new_catalogSize); //array with new catalog capacity
-        newItems.addAll(flavors);
-        flavors = newItems;
-    }
-
-    private void itemPrice(){
-        if(type.equals("Yeast")) price = YEAST_DONUT_PRICE;
-        if(type.equals("Cake")) price = CAKE_DONUT_PRICE;
-        if(type.equals("Donut Hole")) price = DONUT_HOLE_PRICE;
-    }
-
+    /**
+     * Method to add a flavor to the Donut Object's flavors ArrayList.
+     * @param object takes in to check if it is a String object, and adds it into the flavors ArrayList.
+     * @return a boolean being true if the object successfully been added, false otherwise.
+     */
     public boolean add(Object object){
         if(object instanceof String){
             String newFlavor = (String) object;
             flavors.add(newFlavor);
+            Collections.sort(flavors);
             return true;
         }
         return false;
     }
 
+    /**
+     * Method to remove a flavor from the Donut Object's flavors ArrayList.
+     * @param object takes in to check if it is a String object, and finds it in the flavors and removes it.
+     * @return a boolean being true if the object was found and removed, false otherwise.
+     */
     public boolean remove(Object object){
         if(object instanceof String){
             String newFlavor = (String) object;
             if(!flavors.contains(newFlavor)) return false;
             flavors.remove(newFlavor);
+            Collections.sort(flavors);
             return true;
         }
         return false;
     }
 
+    /**
+     * Method to return a String of the Donut object.
+     * @return the Donut Object in a specified string format.
+     */
+    public String toString(){
+        return flavors.toString();
+    }
+
+    /**
+     * Method to return a double for returning Donut price.
+     * @return the Donut Object price in double format.
+     */
     public double returnPrice(){
-        return price;
+        return quantity;
+    }
+
+    /**
+     * Method to return the flavors of the Donut.
+     * @return the Donut Object flavors.
+     */
+    public ArrayList<String> returnFlavors() {return flavors;}
+
+    /**
+     * Method to set the quantity of the Donut object.
+     * @param quantity takes in a int and set the quantity of the Donut Object.
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 }

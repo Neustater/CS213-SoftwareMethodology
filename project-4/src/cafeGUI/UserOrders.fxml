@@ -1,27 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafeGUI.UserOrdersController">
-   <children>
-      <Label layoutX="25.0" layoutY="36.0" text="Your Order">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Label>
-      <Label layoutX="221.0" layoutY="84.0" text="Total" />
-      <TextField fx:id="total" editable="false" layoutX="250.0" layoutY="79.0" prefHeight="24.0" prefWidth="80.0" />
-      <ListView fx:id="itemsList" layoutX="25.0" layoutY="117.0" prefHeight="221.0" prefWidth="324.0" />
-      <Button layoutX="221.0" layoutY="350.0" mnemonicParsing="false" onAction="#placeOrder" text="Place Order" />
-      <Button layoutX="39.0" layoutY="350.0" mnemonicParsing="false" onAction="#removeSelectedItem" text="Remove Selected Item" />
-      <Label layoutX="195.0" layoutY="55.0" text="Sales Tax" />
-      <TextField fx:id="salesTax" editable="false" layoutX="250.0" layoutY="50.0" prefHeight="24.0" prefWidth="80.0" />
-      <Label layoutX="196.0" layoutY="28.0" text="Sub Total" />
-      <TextField fx:id="subTotal" editable="false" layoutX="250.0" layoutY="22.0" prefHeight="24.0" prefWidth="80.0" />
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="404.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cafeGUI.UserOrdersController">
+   <center>
+      <ListView fx:id="itemsList" prefHeight="221.0" prefWidth="373.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="59.0" prefWidth="373.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="orderButton" mnemonicParsing="false" onAction="#placeOrder" text="Place Order" />
+            <Button mnemonicParsing="false" onAction="#removeSelectedItem" text="Remove Selected Item">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="100.0" prefWidth="186.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="38.0" prefWidth="192.0" text="Your Order">
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="100.0" prefWidth="230.0">
+               <children>
+                  <HBox alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="182.0">
+                     <children>
+                        <Label alignment="CENTER" text="Sub Total">
+                           <padding>
+                              <Insets right="4.0" top="5.0" />
+                           </padding></Label>
+                        <TextField fx:id="subTotalBox" alignment="CENTER_RIGHT" editable="false" prefHeight="27.0" prefWidth="120.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="32.0" prefWidth="192.0">
+                     <children>
+                        <Label alignment="CENTER" text="Sales Tax">
+                           <padding>
+                              <Insets right="4.0" top="5.0" />
+                           </padding></Label>
+                        <TextField fx:id="salesTaxBox" alignment="CENTER_RIGHT" editable="false" prefHeight="27.0" prefWidth="120.0" />
+                     </children>
+                     <padding>
+                        <Insets top="1.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="185.0">
+                     <children>
+                        <Label alignment="CENTER" text="Total">
+                           <padding>
+                              <Insets right="4.0" top="5.0" />
+                           </padding></Label>
+                        <TextField fx:id="totalBox" alignment="CENTER_RIGHT" editable="false" prefHeight="27.0" prefWidth="120.0" />
+                     </children>
+                     <padding>
+                        <Insets top="1.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets right="15.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
+   <right>
+      <Pane prefHeight="245.0" prefWidth="10.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <Pane prefHeight="245.0" prefWidth="10.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>
