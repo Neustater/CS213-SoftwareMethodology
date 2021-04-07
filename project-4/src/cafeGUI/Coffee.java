@@ -34,9 +34,9 @@ public class Coffee extends MenuItem implements Customizable{
 
 
     /**
-     * Method to set the price of the Coffee based on size and quantity of Coffees.
+     * Method to update the price of the Coffee based on size and quantity of Coffees.
      */
-    private void itemPrice(){
+    public void itemPrice(){
         price = (numberOfAddIns * ADD_IN);
         switch (size){
             case "Short" : price += SHORT_PRICE;

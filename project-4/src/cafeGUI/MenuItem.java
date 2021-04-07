@@ -27,4 +27,9 @@ public abstract class MenuItem{
      */
     public abstract void setQuantity(int quantity);
 
+    /**
+     * Method to update the price of the MenuItems
+     */
+    abstract void itemPrice();
+
 }

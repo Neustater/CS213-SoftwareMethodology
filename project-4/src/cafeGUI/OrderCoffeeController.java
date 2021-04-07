@@ -3,7 +3,9 @@ package cafeGUI;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -73,11 +75,21 @@ public class OrderCoffeeController {
      */
     @FXML
     void addToOrderButton(ActionEvent event) {
-        currentOrder.add(coffee);
-        Stage stage = (Stage) orderButton.getScene().getWindow();
-        stage.close();
-    }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like " +
+                "to add this item(s) to the current order?", ButtonType.YES, ButtonType.NO);
+        ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
+            if (ButtonType.YES.equals(result)) {
+                currentOrder.add(coffee);
+                Stage stage = (Stage) orderButton.getScene().getWindow();
+                stage.close();
+            }
+        }
 
+    /**
+     * Initializes the current order for the Coffee GUI.
+     * @param currentOrder passes in order object of current
+     *                     order
+     */
     void initOrder(Order currentOrder){
         this.currentOrder = currentOrder;
     }

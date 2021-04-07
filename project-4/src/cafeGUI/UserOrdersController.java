@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.ButtonType;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -57,18 +58,26 @@ public class UserOrdersController {
      */
     @FXML
     void placeOrder(ActionEvent event) {
-        if(orderList.size() != emptyOrder) {
-            Order newOrder = new Order();
-            storeOrders.add(newOrder);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like " +
+                "to place this order?", ButtonType.YES, ButtonType.NO);
 
-            Stage stage = (Stage) orderButton.getScene().getWindow();
-            stage.close();
-        }else{
-            Alert a = new Alert(Alert.AlertType.ERROR);
+            if(orderList.size() != emptyOrder) {
+                ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
+                if (ButtonType.YES.equals(result)) {
+                    Order newOrder = new Order();
+                    storeOrders.add(newOrder);
+
+
+                    Stage stage = (Stage) orderButton.getScene().getWindow();
+                    stage.close();
+                }
+            }else{
+                Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setTitle("Cannot Place Order");
                 a.setContentText("\tNo Items Have Been Ordered!");
                 a.show();
-        }
+            }
+
     }
 
     /**
@@ -78,14 +87,21 @@ public class UserOrdersController {
     @FXML
     void removeSelectedItem(ActionEvent event) {
         MenuItem selectedItem = itemsList.getSelectionModel().getSelectedItem();
-        if(currentOrder.remove(selectedItem)){
-            itemsList.getItems().remove(selectedItem);
-            updateTotals();
-        }else{
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setTitle("Cannot Remove Item");
-            a.setContentText("\tNo Items Have Been Selected\n \tOr Item Does Not Exist!");
-            a.show();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like "
+                + "to remove this item from the order?", ButtonType.YES, ButtonType.NO);
+        ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
+        if (ButtonType.YES.equals(result)) {
+            if (currentOrder.remove(selectedItem)) {
+                itemsList.getItems().remove(selectedItem);
+                updateTotals();
+
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Cannot Remove Item");
+                a.setContentText("\tNo Items Have Been Selected\n \tOr Item Does Not Exist!");
+                a.show();
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -68,6 +69,8 @@ public class OrderDonutsController {
 
     /**
      * Initializes the current order for the Donut GUI.
+     * @param currentOrder passes in order object of current
+     *      *                     order
      */
     void initOrder(Order currentOrder){
         this.currentOrder = currentOrder;
@@ -96,12 +99,18 @@ public class OrderDonutsController {
      */
     @FXML
     void addToOrderButton(ActionEvent event) {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like " +
+                "to this item(s) to the current order?", ButtonType.YES, ButtonType.NO);
         if(addedFlavorsList.getItems().size() != 0) {
-            for (int i = 0; i < addedFlavorsList.getItems().size(); i++) {
-                currentOrder.add(addedFlavorsList.getItems().get(i));
+            ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
+            if (ButtonType.YES.equals(result)) {
+                for (int i = 0; i < addedFlavorsList.getItems().size(); i++) {
+                    currentOrder.add(addedFlavorsList.getItems().get(i));
+                }
+                Stage stage = (Stage) orderButton.getScene().getWindow();
+                stage.close();
             }
-            Stage stage = (Stage) orderButton.getScene().getWindow();
-            stage.close();
         }else{
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Cannot Place Order");

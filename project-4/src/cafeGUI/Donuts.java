@@ -67,6 +67,11 @@ public abstract class Donuts extends MenuItem implements Customizable{
     public ArrayList<String> returnFlavors() {return flavors;}
 
     /**
+     * Method to update the price of the Donut based on quantity of Donuts.
+     */
+    abstract void itemPrice();
+
+    /**
      * Method to set the quantity of the Donut object.
      * @param quantity takes in a int and set the quantity of the Donut Object.
      */

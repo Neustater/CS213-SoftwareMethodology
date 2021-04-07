@@ -12,11 +12,13 @@ public class DonutHoleDonut extends Donuts{
     private static final double DONUT_HOLE_PRICE = 0.33;
     private static final String DONUT_HOLE = "Donut Hole";
     public static final String[] DONUT_HOLE_FLAVORS ={"Peanut", "Chocolate", "Egg", "Glazed"};
+    private double price;
 
     /**
      * Constructor to create a DonutHoleDonut Object
      */
     public DonutHoleDonut(){
+        price = 0;
     }
 
     /**
@@ -30,11 +32,19 @@ public class DonutHoleDonut extends Donuts{
     }
 
     /**
+     * Method to update the price of the Donut based on quantity of Donuts.
+     */
+    public void itemPrice(){
+        price = super.returnPrice() * DONUT_HOLE_PRICE;
+    }
+
+    /**
      * Method to return the price of the DonutHoleDonut object.
      * @return a double called price holding the price of the Donut object.
      */
     public double returnPrice(){
-        return super.returnPrice() * DONUT_HOLE_PRICE;
+        itemPrice();
+        return price;
     }
 
 

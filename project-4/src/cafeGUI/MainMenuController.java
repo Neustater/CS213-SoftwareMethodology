@@ -38,6 +38,7 @@ public class MainMenuController {
 
     /**
      * Loads the Store Orders GUI.
+     * @param event waits for user to press button
      */
     @FXML
     void checkStoreOrder(ActionEvent event) {
@@ -63,6 +64,7 @@ public class MainMenuController {
 
     /**
      * Loads the User's Current Order GUI.
+     * @param event waits for user to press button
      */
     @FXML
     void checkUserOrder(ActionEvent event) {
@@ -89,6 +91,7 @@ public class MainMenuController {
 
     /**
      * Loads the Order Coffee GUI.
+     * @param event waits for user to press button
      */
     @FXML
     void orderCoffee(ActionEvent event) {
@@ -114,6 +117,7 @@ public class MainMenuController {
 
     /**
      * Loads the Order Donuts GUI.
+     * @param event waits for user to press button
      */
     @FXML
     void orderDonuts(ActionEvent event) {

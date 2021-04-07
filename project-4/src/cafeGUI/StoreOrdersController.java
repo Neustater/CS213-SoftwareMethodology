@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -22,9 +23,9 @@ public class StoreOrdersController {
     private ArrayList<Order> storeOrdersList;
     private int numStoreOrders;
     private double total = 0;
-    private int noOrdersPlaced = 0;
-    private int firstOrder = 1;
-    private int offSet = 1;
+    private final int NO_ORDERS_PLACED = 0;
+    private final int FIRST_ORDER = 1;
+    private final int OFF_SET = 1;
     private Order currentOrder;
     private ArrayList<MenuItem> orderList;
 
@@ -43,25 +44,32 @@ public class StoreOrdersController {
      */
     @FXML
     void cancelOrder(ActionEvent event) {
-        if(storeOrders.remove(currentOrder)) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you would like " +
+                "to cancel this order?", ButtonType.YES, ButtonType.NO);
+        ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
+        if (ButtonType.YES.equals(result)) {
 
-            storeOrdersList = storeOrders.returnOrder();
-            numStoreOrders = storeOrdersList.size() - offSet;
+                if (storeOrders.remove(currentOrder)) {
+                    storeOrdersList = storeOrders.returnOrder();
+                    numStoreOrders = storeOrdersList.size() - OFF_SET;
 
-            ordersList.getItems().removeAll(ordersList.getItems());
-            orderListBox.getItems().removeAll(orderListBox.getItems());
+                    ordersList.getItems().removeAll(ordersList.getItems());
+                    orderListBox.getItems().removeAll(orderListBox.getItems());
 
-            reloadOrders();
-        }else{
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setTitle("Cannot Cancel Order");
-            a.setContentText("\tNo Orders Exist!");
-            a.show();
+
+                reloadOrders();
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Cannot Cancel Order");
+                a.setContentText("\tNo Orders Exist!");
+                a.show();
+            }
         }
     }
 
     /**
      * Initializes the Store Orders GUI.
+     *
      */
     @FXML
     public void initialize() {
@@ -79,7 +87,7 @@ public class StoreOrdersController {
     void initOrder(StoreOrders storeOrders){
         this.storeOrders = storeOrders;
         storeOrdersList = storeOrders.returnOrder();
-        numStoreOrders= storeOrdersList.size()-offSet;
+        numStoreOrders= storeOrdersList.size()-OFF_SET;
         reloadOrders();
 
     }
@@ -125,7 +133,7 @@ public class StoreOrdersController {
                 String curTaxStr = df.format(curOrder.getTax());
                 String curTotalStr = df.format(curOrder.getTotal());
 
-                fileWriter.write("User Order Number: " + (index + offSet) +
+                fileWriter.write("User Order Number: " + curOrder.getOrderNumber() +
                         " | Sub Total: $" + curSubTotalStr +
                         " | Sales Tax: $" + curTaxStr +
                         " | Total: $" + curTotalStr + "\n");
@@ -153,7 +161,15 @@ public class StoreOrdersController {
     @FXML
     void setOrder(Event event) {
         try {
-            setOrderList(orderListBox.getValue());
+            int curOrder = orderListBox.getValue();
+            int curOrderIndex = NO_ORDERS_PLACED;
+            for(int i = 0; i < numStoreOrders; i++){
+                if(curOrder == storeOrdersList.get(i).getOrderNumber()){
+                    curOrderIndex = i;
+                    break;
+                }
+            }
+            setOrderList(curOrderIndex);
         }catch(Exception e){
             return;
         }
@@ -163,12 +179,12 @@ public class StoreOrdersController {
      * Reloads the Orders in the Store Orders.
      */
     private void reloadOrders(){
-        if(numStoreOrders > noOrdersPlaced ){
-            for(int i = 1; i <= numStoreOrders; i++) {
-                orderListBox.getItems().addAll(i);
+        if(numStoreOrders > NO_ORDERS_PLACED ){
+            for(int i = 0; i < numStoreOrders; i++) {
+                orderListBox.getItems().addAll(storeOrdersList.get(i).getOrderNumber());
             }
-            orderListBox.getSelectionModel().select(firstOrder-offSet);
-            setOrderList(firstOrder);
+            orderListBox.getSelectionModel().select(NO_ORDERS_PLACED);
+            setOrderList(NO_ORDERS_PLACED);
         }else{
             currentOrder = null;
             updateTotals();
@@ -180,7 +196,7 @@ public class StoreOrdersController {
      * @param orderNumber takes in the orderNumber.
      */
     private void setOrderList(int orderNumber){
-        int orderIndex = (orderNumber - offSet);
+        int orderIndex = (orderNumber);
         currentOrder = storeOrdersList.get(orderIndex);
         orderList = currentOrder.getCurrentOrder();
         updateTotals();
@@ -199,7 +215,7 @@ public class StoreOrdersController {
             currentOrder.updateTotals();
             total = currentOrder.getTotal();
         }else{
-            total = noOrdersPlaced;
+            total = NO_ORDERS_PLACED;
         }
 
         DecimalFormat df = new DecimalFormat("0.00");

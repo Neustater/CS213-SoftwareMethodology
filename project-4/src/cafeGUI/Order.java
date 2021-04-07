@@ -12,7 +12,9 @@ public class Order implements Customizable{
     private double subTotal;
     private double salesTax;
     private double total;
-    private static double SALES_TAX_RATE = 0.06625;
+    public static int runningOrderNumber;
+    private static final double SALES_TAX_RATE = 0.06625;
+    private int orderNumber;
 
     /**
      * Constructor to create a Order Object
@@ -21,6 +23,9 @@ public class Order implements Customizable{
         subTotal = 0;
         salesTax = 0;
         total = 0;
+        runningOrderNumber++;
+        orderNumber = runningOrderNumber;
+
     }
 
     /**
@@ -110,6 +115,13 @@ public class Order implements Customizable{
      */
     public ArrayList<MenuItem> getCurrentOrder() {
         return itemsArray;
+    }
+
+    /**
+     * Method to return the unique order number of the Order
+     */
+    public int getOrderNumber(){
+        return orderNumber;
     }
 
 }

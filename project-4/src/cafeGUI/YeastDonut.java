@@ -12,11 +12,13 @@ public class YeastDonut extends Donuts{
     private static final double YEAST_DONUT_PRICE = 1.39;
     private static final String YEAST_DONUT = "Yeast Donut";
     public static final String[] YEAST_FLAVORS = {"Old Fashion","Chocolate Frosted","Cinnamon", "Glazed"};
+    private double price = 0;
 
     /**
      * Constructor to create a YeastDonut Object
      */
     public YeastDonut(){
+        price = 0;
     }
 
     /**
@@ -30,11 +32,19 @@ public class YeastDonut extends Donuts{
     }
 
     /**
+     * Method to update the price of the Donut based on quantity of Donuts.
+     */
+    public void itemPrice(){
+        price = super.returnPrice() * YEAST_DONUT_PRICE;
+    }
+
+    /**
      * Method to return the price of the YeastDonut object.
      * @return a double called price holding the price of the YeastDonut object.
      */
     public double returnPrice(){
-        return super.returnPrice() * YEAST_DONUT_PRICE;
+        itemPrice();
+        return price;
     }
 
 

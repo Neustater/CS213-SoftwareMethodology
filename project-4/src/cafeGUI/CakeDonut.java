@@ -13,11 +13,13 @@ public class CakeDonut extends Donuts{
     private static final double CAKE_DONUT_PRICE = 1.59;
     private static final String CAKE_DONUT = "Cake Donut";
     public static final String[] CAKE_FLAVORS = {"Strawberry", "Blueberry", "Cinnamon", "Chocolate"};
+    private double price;
 
     /**
      * Constructor to create a CakeDonut Object
      */
     public CakeDonut(){
+        price = 0;
     }
 
     /**
@@ -32,11 +34,19 @@ public class CakeDonut extends Donuts{
     }
 
     /**
+     * Method to update the price of the Donut based on quantity of Donuts.
+     */
+    public void itemPrice(){
+        price = super.returnPrice() * CAKE_DONUT_PRICE;
+    }
+
+    /**
      * Method to return the price of the CakeDonut object.
      * @return a double called price holding the price of the Donut object.
      */
     public double returnPrice(){
-        return super.returnPrice() * CAKE_DONUT_PRICE;
+        itemPrice();
+        return price;
     }
 
 

@@ -1,9 +1,10 @@
-User Order Number: 1 | Sub Total: $11.71 | Sales Tax: $0.78 | Total: $12.49
-1x Yeast Donut Donut [Chocolate Frosted] $1.39
-2x Yeast Donut Donut [Glazed] $2.78
-2x Yeast Donut Donut [Old Fashion] $2.78
-2x Yeast Donut Donut [Cinnamon] $2.78
-2x Donut Hole Donut [Peanut] $0.22
-2x Donut Hole Donut [Chocolate] $0.22
-2x Donut Hole Donut [Egg] $0.22
+User Order Number: 1 | Sub Total: $3.38 | Sales Tax: $0.22 | Total: $3.60
+1x Yeast Donut [Cinnamon] $1.39
+1x Short Coffee [] $1.99
+
+User Order Number: 2 | Sub Total: $1.99 | Sales Tax: $0.13 | Total: $2.12
+1x Short Coffee [] $1.99
+
+User Order Number: 5 | Sub Total: $1.39 | Sales Tax: $0.09 | Total: $1.48
+1x Yeast Donut [Chocolate Frosted] $1.39
 
