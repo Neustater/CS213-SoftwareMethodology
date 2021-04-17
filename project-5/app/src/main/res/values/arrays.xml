@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sizeArray">
+        <item>Short</item>
+        <item>Tall</item>
+        <item>Grande</item>
+        <item>Venti</item>
+    </string-array>
+    <string-array name="quantityArray">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string-array name="donutArray">
+        <item>Boston Creme</item>
+        <item>Donut Hole</item>
+        <item>Glazed Yeast</item>
+        <item>Old Fashioned</item>
+        <item>Chocolate Cake</item>
+        <item>Chocolate Frosted</item>
+        <item>Strawberry Frosted</item>
+        <item>Jelly Filled</item>
+        <item>French Cruller</item>
+    </string-array>
+
+</resources>
