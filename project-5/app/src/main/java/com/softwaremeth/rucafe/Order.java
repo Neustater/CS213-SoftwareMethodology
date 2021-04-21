@@ -1,6 +1,5 @@
 package com.softwaremeth.rucafe;
 
-import androidx.appcompat.app.AppCompatActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -86,6 +85,7 @@ public class Order implements Customizable, Serializable {
      * Method to update the total price of the Order.
      */
     public void updateTotals(){
+        calculateSubTotal();
         salesTax  = subTotal * SALES_TAX_RATE;
         total = subTotal + salesTax;
     }

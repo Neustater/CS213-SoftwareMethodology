@@ -15,7 +15,7 @@
     <string name="total">Total:</string>
     <string name="size">Size:</string>
     <string name="quantity">Quantity:</string>
-    <string name="yourOrder">Your Orders:</string>
+    <string name="yourOrder">Current Order:</string>
     <string name="storeOrders">Store Orders:</string>
     <string name="placeOrder">Place Order</string>
     <string name="addToOrder">Add to Order</string>
@@ -38,8 +38,20 @@
     <string name="no_orders">No Orders Placed</string>
     <string name="order_no">Order Number:</string>
 
-    <string name="added_to_order">Added to Order!</string>
+    <string name="donut_order_message">Are you sure you would like to order this Donut(s)?"</string>
+    <string name="coffee_order_message">Are you sure you would like to order this Coffee(s)?"</string>
+    <string name="user_order_message">Are you sure you would like place this order?"</string>
+
+    <string name="added_to_order_coffee">Coffee added to Order!</string>
+    <string name="added_to_order_donut">Donut added to Order!</string>
     <string name="placed_order">Order Placed!</string>
+
+    <string name="item_remove_message">Are you sure you would like to remove this item?"</string>
+    <string name="item_removed">Item Removed"</string>
+    <string name="order_empty">Order Cannot Be Placed: Order Empty"</string>
+    <string name="order_remove_message">Are you sure you would like to cancel this Order?"</string>
+    <string name="order_removed">Order Cancelled"</string>
+
 
 
 </resources>

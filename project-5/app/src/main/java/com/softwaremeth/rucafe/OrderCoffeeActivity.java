@@ -1,6 +1,8 @@
 package com.softwaremeth.rucafe;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,13 +10,21 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class OrderCoffeeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+/**
+ The OrderCoffeeActivity Class handles user ordering
+ of coffee objects through GUI and adds them to the
+ current order
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
+
+public class OrderCoffeeActivity extends AppCompatActivity{
 
     private Order currentOrder;
     private StoreOrders storeOrder;
@@ -23,19 +33,20 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
 
     private static final String[] UNIVERSAL_SIZES = {"Short","Tall","Grande","Venti"};
 
-    CheckBox caramelBox;
-    CheckBox whippedBox;
-    CheckBox syrupBox;
-    CheckBox milkBox;
-    CheckBox sugarBox;
-    CheckBox creamBox;
+    private CheckBox caramelBox;
+    private CheckBox whippedBox;
+    private CheckBox syrupBox;
+    private CheckBox milkBox;
+    private CheckBox sugarBox;
+    private CheckBox creamBox;
 
-    TextView subtotalBox;
+    private TextView subtotalBox;
 
     private String size;
     private int quantity;
     private Coffee currentCoffee;
     private double curPrice;
+    private boolean placeOrder = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +60,10 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         storeOrder = (StoreOrders) intent.getSerializableExtra("serializedStoreOrderCoffee");
 
         sizeSpinner = findViewById(R.id.sizeSpinner);
-        sizeSpinner.setOnItemSelectedListener(this);
+        sizeSpinner.setOnItemSelectedListener(new SizeSpinnerClass());
 
         quantitySpinner = findViewById(R.id.quantitySpinnerCoffee);
-        quantitySpinner.setOnItemSelectedListener(this);
+        quantitySpinner.setOnItemSelectedListener(new QuantitySpinnerClass());
 
         currentCoffee = new Coffee();
         subtotalBox = (TextView) findViewById(R.id.subtotalBoxCoffee);
@@ -63,8 +74,12 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         sizeConversionSetter();
 
         updateSubtotal();
+
     }
 
+    /**
+     *  finish method returns variables to the super class finishing this class process.
+     */
     @Override
     public void finish(){
         Intent resultIntent = new Intent();
@@ -74,11 +89,19 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         super.finish();
     }
 
+    /**
+     * Method calls the finish method when the back button is pressed on the android.
+     */
     @Override
     public void onBackPressed() {
         finish();
     }
 
+    /**
+     * Method checks if the MenuItem selected to go back to the home page.
+     * @param item checks for the item that is selected in the Menu.
+     * @return boolean true if pressed home, false otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -89,19 +112,11 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        quantity = Integer.parseInt((String) quantitySpinner.getSelectedItem());
-        size = (String) sizeSpinner.getSelectedItem();
-
-        currentCoffee.setQuantity(quantity);
-        sizeConversionSetter();
-        updateSubtotal();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
-
+    /**
+     * When caramel is checked on screen, it adds Caramel to the current Coffee.
+     * Also updates the sub total.
+     * @param view checks for a selection.
+     */
     public void checkCaramel(View view) {
         caramelBox = findViewById(R.id.caramelBox);
 
@@ -114,6 +129,11 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         updateSubtotal();
     }
 
+    /**
+     * When cream is checked on screen, it adds Cream to the current Coffee.
+     * Also updates the sub total.
+     * @param view checks for a selection.
+     */
     public void checkCream(View view) {
         creamBox = findViewById(R.id.creamBox);
 
@@ -126,6 +146,11 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         updateSubtotal();
     }
 
+    /**
+     * When sugar is checked on screen, it adds Sugar to the current Coffee.
+     * Also updates the sub total.
+     * @param view checks for a selection.
+     */
     public void checkSugar(View view) {
         sugarBox = findViewById(R.id.sugarBox);
 
@@ -138,6 +163,11 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         updateSubtotal();
     }
 
+    /**
+     * When milk is checked on screen, it adds Milk to the current Coffee.
+     * Also updates the sub total.
+     * @param view checks for a selection.
+     */
     public void checkMilk(View view) {
         milkBox = findViewById(R.id.milkBox);
 
@@ -150,6 +180,11 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         updateSubtotal();
     }
 
+    /**
+     * When whipped is checked on screen, it adds Whipped to the current Coffee.
+     * Also updates the sub total.
+     * @param view checks for a selection.
+     */
     public void checkWhipped(View view) {
         whippedBox = findViewById(R.id.whippedBox);
 
@@ -162,6 +197,11 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         updateSubtotal();
     }
 
+    /**
+     * When syrup is checked on screen, it adds Syrup to the current Coffee.
+     * Also updates the sub total.
+     * @param view checks for a selection.
+     */
     public void checkSyrup(View view) {
         syrupBox = findViewById(R.id.syrupBox);
 
@@ -174,12 +214,47 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         updateSubtotal();
     }
 
+    /**
+     * This method adds the Coffee order to the current order of the User.
+     * @param view checks for a selection.
+     */
     public void addToOrder(View view) {
-        currentOrder.add(currentCoffee);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getResources().getString(R.string.coffee_order_message));
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                placeOrder = true;
+                placedOrder();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                placeOrder = false;
+                placedOrder();
+            }
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
 
-        finish();
+
     }
 
+
+    /**
+     * This method places the order, adding it to the current order of the User.
+     */
+    public void placedOrder(){
+        if(placeOrder) {
+            currentOrder.add(currentCoffee);
+
+            Toast.makeText(this, getResources().getString(R.string.added_to_order_coffee),
+                    Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    /**
+     * This method updates the sub total of the coffee.
+     */
     private void updateSubtotal(){
         curPrice = currentCoffee.returnPrice();
         DecimalFormat df = new DecimalFormat("0.00");
@@ -187,6 +262,9 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         subtotalBox.setText("$" + curPriceStr);
     }
 
+    /**
+     * This method sets the size of the coffee.
+     */
     private void sizeConversionSetter(){
         String convertedSize;
         if(size.equals(getResources().getString(R.string.shorti))){
@@ -203,4 +281,71 @@ public class OrderCoffeeActivity extends AppCompatActivity implements AdapterVie
         currentCoffee.setSize(convertedSize);
     }
 
+    /**
+     The SizeSpinnerClass is an internal class that handles the
+     size spinner inputs
+     @author Muhammad Faizan Saiyed, Michael Neustater
+     */
+    class SizeSpinnerClass implements AdapterView.OnItemSelectedListener
+    {
+        /**
+         * Method waits for an Item Click to set the quantity of the coffee and the size of the coffee.
+         * Also updates the subtotal of the coffee.
+         * @param parent checks for the parent that is clicked.
+         * @param view checks for the action that is pressed.
+         * @param position checks for the position of selections for lists clicked.
+         * @param id gets the id of the item clicked.
+         */
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            size = (String) sizeSpinner.getSelectedItem();
+            sizeConversionSetter();
+            updateSubtotal();
+        }
+
+        /**
+         * When nothing is selected, it does nothing.
+         * @param parent checks for a selection.
+         */
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    /**
+     The QuantitySpinnerClass is an internal class that handles the
+     quantity spinner inputs
+     @author Muhammad Faizan Saiyed, Michael Neustater
+     */
+    class QuantitySpinnerClass implements AdapterView.OnItemSelectedListener
+    {
+        /**
+         * Method waits for an Item Click to set the quantity of the coffee and the size of the coffee.
+         * Also updates the subtotal of the coffee.
+         * @param parent checks for the parent that is clicked.
+         * @param view checks for the action that is pressed.
+         * @param position checks for the position of selections for lists clicked.
+         * @param id gets the id of the item clicked.
+         */
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            quantity = Integer.parseInt((String) quantitySpinner.getSelectedItem());
+            currentCoffee.setQuantity(quantity);
+            updateSubtotal();
+        }
+
+        /**
+         * When nothing is selected, it does nothing.
+         * @param parent checks for a selection.
+         */
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
 }
+
+

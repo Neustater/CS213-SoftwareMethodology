@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent" app:boxBackgroundColor="#F3ECE2"
             android:background="@drawable/button_shape"
             android:layout_marginTop="12dp" app:layout_constraintHorizontal_bias="0.38"
-            android:backgroundTint="#F1ECE4" android:translationZ="10dp" android:paddingTop="3dp">
+            android:backgroundTint="#F1ECE4" android:translationZ="6dp" android:paddingTop="3dp">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

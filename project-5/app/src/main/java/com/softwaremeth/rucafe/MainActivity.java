@@ -2,11 +2,15 @@ package com.softwaremeth.rucafe;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+/**
+ The MainActivity Class handles the main menu for ordering
+ and for checking store and user order using GUI
+ @author Muhammad Faizan Saiyed, Michael Neustater
+ */
 
 public class MainActivity extends AppCompatActivity{
 
@@ -28,6 +32,15 @@ public class MainActivity extends AppCompatActivity{
         storeOrders.add(currentOrder);
     }
 
+    /**
+     * The onActivityResult method creates the intent of the class.
+     * Starting the screen and setting default values.
+     * @param requestCode values that determines what function to execute
+     *                    based on the request
+     * @param resultCode determines the status of the result (Ok or Not OK)
+     * @param data takes data being sent from the caller by the intent
+     *
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -80,6 +93,11 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * This method sets up the screen to order a Donut.
+     * Waits for the donut purchase to be sent back.
+     * @param view checks for a selection.
+     */
     public void orderDonut(View view) {
         Intent orderDonut = new Intent(this, OrderDonutActivity.class);
         orderDonut.putExtra("serializedOrderDonut", currentOrder);
@@ -88,6 +106,11 @@ public class MainActivity extends AppCompatActivity{
         startActivityForResult(orderDonut, REQ_CODE_DONUT);
     }
 
+    /**
+     * This method sets up the screen to order Coffee.
+     * Waits for the coffee purchase to be sent back.
+     * @param view checks for a selection.
+     */
     public void orderCoffee(View view) {
         Intent orderCoffee = new Intent(this, OrderCoffeeActivity.class);
         orderCoffee.putExtra("serializedOrderCoffee", currentOrder);
@@ -96,8 +119,13 @@ public class MainActivity extends AppCompatActivity{
         startActivityForResult(orderCoffee, REQ_CODE_COFFEE);
     }
 
+    /**
+     * This method sets up the screen to look at the current Order of the User.
+     * Can send the order to the store orders page.
+     * @param view checks for a selection.
+     */
     public void checkUserOrders(View view) {
-        Intent userOrder = new Intent(this, UserOrdersActivity.class);
+        Intent userOrder = new Intent(this, OrderDetailsActivity.class);
 
         userOrder.putExtra("serializedUserOrder", currentOrder);
         userOrder.putExtra("serializedUserStoreOrder", storeOrders);
@@ -106,7 +134,11 @@ public class MainActivity extends AppCompatActivity{
         currentOrder = storeOrders.returnOrder().get(numStoreOrders);
         startActivityForResult(userOrder, REQ_CODE_USER_ORDER);
     }
-
+    /**
+     * This method sets up the check all of the store orders.
+     * Can view or remove orders.
+     * @param view checks for a selection.
+     */
     public void checkStoreOrders(View view) {
         Intent storeOrder = new Intent(this, StoreOrdersActivity.class);
         storeOrder.putExtra("serializedStoreUserOrder", currentOrder);

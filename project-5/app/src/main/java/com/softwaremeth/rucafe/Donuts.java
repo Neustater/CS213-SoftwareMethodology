@@ -17,12 +17,18 @@ public class Donuts extends MenuItem implements Customizable{
 
     private static final int INIT = 0;
 
+    /**
+     * Constructor to create a Donut Object
+     */
     public Donuts(String type){
         price = INIT;
         quantity = INIT;
         this.type = type;
     }
 
+    /**
+     * Method to calculate the item price
+     */
     public void itemPrice(){
         price = quantity * DONUT_PRICE;
     }
@@ -56,11 +62,21 @@ public class Donuts extends MenuItem implements Customizable{
         return price;
     }
 
+    /**
+     * Method to add donut of flavor, required
+     * by Customizable
+     * Not Required for Project 5
+     */
     @Override
     public boolean add(Object obj) {
         return false;
     }
 
+    /**
+     * Method to add donut of flavor, required
+     * by Customizable
+     * Not Required for Project 5
+     */
     @Override
     public boolean remove(Object obj) {
         return false;

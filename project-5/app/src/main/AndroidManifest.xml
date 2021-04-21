@@ -17,8 +17,8 @@
                   android:label="Store Orders"
                   android:parentActivityName=".MainActivity">
         </activity>
-        <activity android:name=".UserOrdersActivity"
-                  android:label="User Orders"
+        <activity android:name=".OrderDetailsActivity"
+                  android:label="Current Order"
                   android:parentActivityName=".MainActivity">
         </activity>
         <activity android:name=".OrderCoffeeActivity"
