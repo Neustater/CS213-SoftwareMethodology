@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- The UserOrdersActivity Class handles the viewing
+ The OrderDetailsActivity Class handles the viewing
  of current MenuItems ordered and their prices
  through GUI and allows the user to cancel an item
  @author Muhammad Faizan Saiyed, Michael Neustater

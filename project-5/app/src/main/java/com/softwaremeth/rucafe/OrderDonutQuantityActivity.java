@@ -95,7 +95,7 @@ public class OrderDonutQuantityActivity extends AppCompatActivity implements Ada
     public void placedOrder(){
         if(placeOrder){
             Toast.makeText(this, getResources().getString(R.string.added_to_order_donut),
-                    Toast.LENGTH_SHORT);
+                    Toast.LENGTH_SHORT).show();
             currentOrder.add(currentDonut);
             finish();
         }
